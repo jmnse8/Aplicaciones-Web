@@ -1,22 +1,93 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <title>Prac vol 1</title>
 
-        <link rel="stylesheet" href="pr.css">
+<head>
+    <title>Práctica voluntaria 1</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="estilo.css">
 
-    </head>
-    <body>
-        <div class="topnav">
-            <a href="/index.html">LOGO</a>
+</head>
 
-            <div>
+<body>
+    <nav class="fixed-top">
+        <div class="nav-logo">
+            <a href="./index.html">
+                <h1 class="logo">
+                    GESTOR DE TAREAS
+                </h1>
+            </a>
+        </div>
+
+
+
+
+        <div class="perfil-info">
+            <img class="foto-redonda"
+                src="https://static.intercomassets.com/avatars/2604379/square_128/Diego-Pic-1538276402.png"
+                alt="foto perfil">
+            <p>José Bonifacio</p>
+
+            <button id="boton-desconectar">DESCONECTAR</button>
+        </div>
+
+    </nav>
+
+    <!-- <div class="fondo-lineas contenedor-principal"> -->
+
+    
+        <div class="panel-central fondo-transparente">
+            
+            <div class="tarjeta-tarea">
+                <p>Preparar prácticas AW</p>
                 <div>
-                    <img class="fotoRed" src="https://thumbs.dreamstime.com/z/macro-cuadrada-de-la-flor-de-la-maravilla-del-gerbera-31590353.jpg" alt="Girl in a jacket" width="20" height="20">
-                    <h5>Nombre</h5>
+                    <span class="etiqueta">Universidad</span>
+                    <span class="etiqueta">AW</span>
                 </div>
-                <button>Desconectarse</button>
+                <button class="button-sombra b-finalizar">FINALIZAR</button>
+            </div>
+
+            <div class="tarjeta-tarea">
+                <p class="tarjeta-finalizada">Mirar fechas del congreso</p>
+                
+            </div>
+
+            <div class="tarjeta-tarea">
+                <p>Ir al supermercado</p>
+                <div>
+                    <span class="etiqueta">Personal</span>
+                    <span class="etiqueta">Básicos</span>
+                </div>
+                <button class="button-sombra b-finalizar">FINALIZAR</button>
+            </div>
+
+            <div class="tarjeta-tarea">
+                <p>Jugar al fútbol</p>
+                <div>
+                    <span class="etiqueta">Personal</span>
+                    <span class="etiqueta">Deporte</span>
+                </div>
+                <button class="button-sombra b-finalizar">FINALIZAR</button>
+            </div>
+
+            <div class="tarjeta-tarea">
+                <p>Hablar con profesor</p>
+                <div>
+                    <span class="etiqueta">Universidad</span>
+                    <span class="etiqueta">TP2</span>
+                </div>
+                <button class="button-sombra b-finalizar">FINALIZAR</button>
+            </div>
+
+            <div class="botones-abajo">
+                <button class="button-sombra eliminar">ELIMINAR</button>
+                <button class="button-sombra añadir">AÑADIR</button>
             </div>
         </div>
-    </body>
+    
+        <!-- </div> -->
+
+
+
+</body>
+
 </html>
