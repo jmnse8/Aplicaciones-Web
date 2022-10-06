@@ -2,7 +2,7 @@
 
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  /* background-color: #8bcffc; */
+
   background-image: repeating-linear-gradient(
     -45deg,
     #e6f5ff 0px,
@@ -13,7 +13,7 @@ body {
 }
 
 a{
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 button {
@@ -27,7 +27,6 @@ button {
 }
 
 .button-sombra {
-  
   transition: all 1s ease;
   box-shadow: .5rem .5rem 1rem #768c9b, 
   -.5rem -.5rem 1rem #bcd6e7;
@@ -38,103 +37,25 @@ button {
   -.2rem -.2rem 1rem #768c9b;
 }
 
-
 nav {
-  width: 100%;
-  height: 10vh;
   background-image: linear-gradient(to right, black, rgb(28, 76, 139));
-  
-  display: flex;
-  flex-direction: row;
-  margin: auto;
-  justify-content:space-between;
-  align-items: center;
- /*  float: top; */
   color: white;
-}
-.fixed-top {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
 }
 
 .logo {
-  /* color: white; */
   text-align: center;
   font-size: 2rem;
   font-weight: 800;
   letter-spacing: -.06em;
-  margin: 0 0 16px;
   background: -webkit-linear-gradient(#30678c, #8bcffc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-left: 2em;
-}
-.perfil-info {
-  width: 20em;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  margin-right: 2em;
 }
 
 .foto-redonda {
   height: 3.5em;
   width: 3.5em;
   border-radius: 100%;
-}
-
-#boton-desconectar {
-  padding:  .5rem .75rem;
-  font-size: .75rem;
-}
-
-/* 
-
-@keyframes logo-animacion {
-  0% {
-      background: -webkit-linear-gradient( #7928CA, #FF0080);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-  }
-
-  50% {
-      background: -webkit-linear-gradient(#FF0080, #7928CA, #FF0080);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-  }
-
-  100% {
-      background: -webkit-linear-gradient(#0c6936, #06fabd);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-  }
-} */
-
-
-
-.contenedor-principal {
-  width: 100%;
-  height: 100vh;
-  /* display: flex;
-  align-items: center; */
-
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-}
-
-.panel-central{
-  display: block;
-  text-align: center;
-  margin-top: 8em;
-  margin-left: auto;
-  margin-right: auto;
-  width: 70%;
-  padding: 2em;
 }
 
 .fondo-transparente {
@@ -145,24 +66,12 @@ nav {
   -webkit-backdrop-filter: blur(3px);
 }
 
-
 .tarjeta-tarea{
-  
   border-radius: 5px;
   box-shadow:  0 8px 30px rgba(0,0,0,.12);
   background-color: #ffffffb6;
-  height: 5rem;
-
-  display: flex;
-  flex-direction: row;
-
-  justify-content:space-between;
-  align-items: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  margin-bottom: 2rem;
+  
   font-size: 1.5rem;
-
 }
 
 .etiqueta {
@@ -175,26 +84,4 @@ nav {
 
 .tarjeta-finalizada {
   text-decoration:line-through;
-}
-
-.b-finalizar {
-  padding: .75rem 1.25rem;
-}
-
-.botones-abajo{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
-
-.eliminar {
-  background-color: #f35c5c;
-  border: 2px solid #e95656;
-  border-radius: .5rem;
-}
-
-.añadir {
-  background-color: #5cf368;
-  border: 2px solid #56e962;
-  border-radius: .5rem;
 }
