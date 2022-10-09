@@ -1,0 +1,37 @@
+nav,
+button {
+    display: none !important;
+}
+
+body {
+    display: block !important;
+    width: 100%;
+}
+ul {
+    list-style-type:circle;
+}
+/* .tarjeta-tarea::before {
+    content: "*";
+} */
+
+/* .tarjeta-tarea {
+    display:block !important;
+} */
+
+.etiqueta::before {
+    content: " (";
+}
+
+.etiqueta::after {
+    content: ")";
+}
+
+body::after {
+    content: "Copyright JM&J";
+    display: block;
+    text-align: center;
+}
+
+.tarjeta-finalizada {
+    text-decoration: line-through;
+}
