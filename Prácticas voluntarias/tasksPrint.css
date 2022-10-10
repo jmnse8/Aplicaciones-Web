@@ -27,7 +27,11 @@ body {
 }
 
 p::before {
-    content: "• ";
+    content: "•   ";
+}
+
+p {
+    font-weight: bold;
 }
 p::after {
     content: ": ";
@@ -57,4 +61,8 @@ body::after {
 
 .tarjeta-finalizada {
     text-decoration: line-through;
+}
+
+.p-3 {
+    padding: 0 !important;
 }

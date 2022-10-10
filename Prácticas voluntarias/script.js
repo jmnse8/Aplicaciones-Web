@@ -8,3 +8,8 @@ let listaTareas = [
     , {text: "Hablar con profesor", done: false, tags:["universidad", "tp2"]}
     ];
     
+function getToDoTasks(tasks) {
+    return (!(tasks instanceof Array)) ? [] : tasks.filter(t => (t["done"] == undefined || !t["done"])).map(e => e["text"]);
+}
+
+getToDoTasks(listaTareas);
