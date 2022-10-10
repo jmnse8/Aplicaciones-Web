@@ -7,16 +7,39 @@ body {
     display: block !important;
     width: 100%;
 }
-ul {
-    list-style-type:circle;
-}
-/* .tarjeta-tarea::before {
-    content: "*";
-} */
 
-/* .tarjeta-tarea {
-    display:block !important;
-} */
+.container::before {
+    content: "TAREAS ";
+}
+
+.align-items-center {
+    align-items: initial !important;
+}
+
+.col-4 {
+    flex: auto !important;
+    width : 1em !important;
+}
+.row {
+    display:flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+}
+
+p::before {
+    content: "• ";
+}
+p::after {
+    content: ": ";
+}
+
+.text-md-center {
+    text-align: unset!important;
+}
+
+.text-md-start {
+    text-align: unset!important;
+}
 
 .etiqueta::before {
     content: " (";
