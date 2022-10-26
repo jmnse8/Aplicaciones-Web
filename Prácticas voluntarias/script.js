@@ -16,9 +16,9 @@ function findByTag(tasks, tag) {
     return (!(tasks instanceof Array)) ? [] : tasks.filter(t => (t.tags.includes(tag)));
 }
 
-function findByTags(tasks, tags) {//Falta por hacer
-    return (!(tasks instanceof Array) || !tags instanceof Array) ? [] 
-        : tasks.filter(t => (t.tags.includes(tags)));
+function findByTags(tasks, tags) {
+        return (!(tasks instanceof Array) || !tags instanceof Array) ? [] 
+        : tasks.filter(t => tags.some(ta => t["tags"].includes(ta)));
 }
 
 function countDone(tasks) {
@@ -31,7 +31,7 @@ function createTask(texto) {
     let titulo = "";
 
     if(texto != "" && typeof texto != "undefined" && typeof texto == "string"){
-        etiquetas = (texto.match(/@\w+/g)).map(n => n.replace("@",""));
+        etiquetas = texto.match(/@\w+/g).map(n => n.replace("@",""));
 
         titulo = texto.replace(/@\w+/g,"").trim().replace(/\s/g,' ');
     }
@@ -39,10 +39,7 @@ function createTask(texto) {
 }
 
 //countDone(listaTareas);
-
-//findByTags(listaTareas, ["personal","practica"]);
-
 //getToDoTasks(listaTareas);
 //findByTag(listaTareas, "personal");
-
+//findByTags(listaTareas, ["personal", "practica"]);
 createTask("Ir al médico @personal @salud");
