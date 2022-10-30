@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("head") %>
+    <!-- login.css -->
+
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+
+    <body class="p-5">
+        <div class="container-sm panel-principal">
+            <div class="row justify-content-center m-3">
+                <img class="logo" src="/images/logoUCM.jpg" alt="logo UCM">
+            </div>
+            <div class="row m-3">
+                <form class="" action="/login" method="post">
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" name="" id="email" placeholder="Your e-mail">
+                        <label for="floatingInputValue">Your e-mail</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" name="" id="password" placeholder="Your password">
+                        <label for="floatingInputValue">Your password</label>
+                    </div>
+                    <div class="col text-center">
+                        <button type="submit" class="btn submit-button">Iniciar sesión</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row m-3">
+                <div class="col text-center">
+                <p>
+                    ¿No tienes cuenta? <a href="/singup">Registrate</a>
+                </p>
+            </div>
+            </div>
+        </div>
+    </body>
+
+</html>

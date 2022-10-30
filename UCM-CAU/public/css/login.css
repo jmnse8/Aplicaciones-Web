@@ -1,0 +1,17 @@
+.panel-principal {
+    background-color: #fff;
+    box-shadow: 0px 18.92px 37.84px rgb(38 26 25 / 25%);
+    border-radius: 8px;
+    padding: 2em;
+    width: 30em;
+}
+
+.logo {
+    height: 7em;
+    width: auto;
+}
+
+.submit-button {
+    background-color: rgb(142, 142, 237);
+    color: #fff;
+}

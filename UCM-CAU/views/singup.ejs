@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("head") %>
+    <!-- login.css -->
+
+    <link rel="stylesheet" href="/css/singup.css">
+</head>
+
+    <body class="p-5">
+        <div class="container-sm panel-principal">
+            <div class="row justify-content-center m-3">
+                <img class="logo" src="/images/logoUCM.jpg" alt="logo UCM">
+            </div>
+            <div class="row m-3">
+                <form class="" action="/singup" method="post">
+                    <div class="row g-2">
+                        <div class="col-md"><div class="form-floating mb-3">
+                            <input type="email" class="form-control" name="" id="email" placeholder="Your e-mail">
+                            <label for="floatingInputValue">Your e-mail</label>
+                        </div></div>
+                        <div class="col-md"><div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="" id="name" placeholder="Your name">
+                            <label for="floatingInputValue">Your name</label>
+                        </div></div>
+                    </div>
+
+                    <div class="row g-2">
+                        <div class="col-md">
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" name="" id="password" placeholder="Your password">
+                                <label for="floatingInputValue">Your password</label>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" name="" id="password2" placeholder="Confirm your password">
+                                <label for="floatingInputValue">Confirm your password</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-floating mb-3">
+                    <select class="form-select" id="perfilUniversitario" aria-label="Perfil universitario">
+                        <option value="alumno" selected>Alumno</option>
+                        <option value="pas">Personal de Administración y Servicios</option>
+                        <option value="pdi">Personal Docente e Investigador</option>
+                        <option value="antiguo-alumno">Antiguo alumno</option>
+                      </select>
+                      <label for="floatingSelect">Perfil universitario</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="file" accept="image/png, image/jpeg" class="form-control" name="" id="image" placeholder="Select user image">
+                        <label for="floatingInputValue">Select user image</label>
+                    </div>
+
+                    <div class="row align-items-center">
+                        <div class="col-md">
+                            <div class="form-check form-switch form-check-reverse">
+                                <input class="form-check-input" type="checkbox" role="switch" id="technician">
+                                <label class="form-check-label" for="technician">
+                                    Technician
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" name="" id="nempleado" placeholder="Your employee number">
+                                <label for="floatingInputValue">Your employee number</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col text-center">
+                        <button type="submit" class="btn submit-button">Registrarse</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row m-3">
+                <div class="col text-center">
+                <p>
+                    ¿Ya tienes cuenta? <a href="/login">Inicia sesión</a>
+                </p>
+            </div>
+            </div>
+        </div>
+    </body>
+
+</html>

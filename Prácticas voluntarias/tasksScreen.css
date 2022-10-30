@@ -67,6 +67,7 @@ nav {
 }
 
 .fondo-transparente {
+  margin-top: 7em;
   border-radius: 5px;
   box-shadow:  0 8px 30px rgba(0,0,0,.12);
   background-color: #ffffff4d;
