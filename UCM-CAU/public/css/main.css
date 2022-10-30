@@ -3,12 +3,7 @@ body {
     background-color: #f8f7f3;
 }
 
-a {
-    font-weight: bold;
-    text-decoration: none;
-    color: rgb(142, 142, 237);
-    transition: 0.3s;
-}
+
 
 /* .form-control:focus {
     border-color: rgba(142, 142, 237, 0.8);

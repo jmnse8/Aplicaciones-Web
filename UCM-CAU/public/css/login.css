@@ -15,3 +15,10 @@
     background-color: rgb(142, 142, 237);
     color: #fff;
 }
+
+.enlace {
+    font-weight: bold;
+    text-decoration: none;
+    color: rgb(142, 142, 237);
+    transition: 0.3s;
+}

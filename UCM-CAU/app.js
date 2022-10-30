@@ -27,8 +27,10 @@ app.listen(config.port, function (err) {
 });
 
 const user = require("./routes/user");
+const aviso = require("./routes/aviso");
 
 app.use('/', user);
+app.use('/aviso', aviso);
 
 
 
