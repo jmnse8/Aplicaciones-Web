@@ -3,7 +3,16 @@ const express = require("express");
 const app = express();
 
 app.get("/avisosentrantes", function (request, response) {
-    response.render("avisosEntrantes.ejs", { usuario: {}, errores: {} });//request.session.usuario
+    let usuario = {
+        email: request.session.currentEmail,
+        name: request.session.currentName,
+        password: request.session.currentPassword,
+        image: request.session.currentImage,
+        perfil: request.session.currentPerfil,
+        nEmpleado: request.session.currentNEmpleado
+    }
+    console.log(usuario);
+    response.render("avisosEntrantes.ejs", { usuario: {usuario}, errores: {} });//request.session.usuario
 });
 
 app.get("/misavisos", function (request, response) {
