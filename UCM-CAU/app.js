@@ -5,7 +5,7 @@ const mysqlSession = require("express-mysql-session");
 const path = require("path");
 //const fs = require("fs");
 const bodyParser = require("body-parser");
-const mysql = require("mysql");
+//const mysql = require("mysql");
 const config = require("./config.js");
 
 
@@ -51,7 +51,7 @@ const user = require("./routes/user");
 const aviso = require("./routes/aviso");
 
 app.use('/', user);
-app.use('/aviso', aviso);
+app.use('/', aviso);
 
 
 
