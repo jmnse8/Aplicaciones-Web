@@ -4,6 +4,7 @@
     <!-- login.css -->
 
     <link rel="stylesheet" href="/css/singup.css">
+    <script src="/scripts/singup.js"></script>
 </head>
 
     <body class="p-5">
@@ -40,9 +41,9 @@
                     </div>
                     
                     <div class="form-floating mb-3">
-                    <select class="form-select" id="perfilUniversitario" name="perfil" aria-label="Perfil universitario">
-                        <option value="alumno" selected>Alumno</option>
-                        <option value="pas">Personal de Administración y Servicios</option>
+                    <select class="form-select" id="perfilUniversitario" onchange="pasSelected()" name="perfil" aria-label="Perfil universitario">
+                        <option value="pas" selected>Personal de Administración y Servicios</option>
+                        <option value="alumno">Alumno</option>
                         <option value="pdi">Personal Docente e Investigador</option>
                         <option value="antiguo-alumno">Antiguo alumno</option>
                       </select>
@@ -51,20 +52,23 @@
                     
                     <input type="file" accept="image/*" class="form-control mb-3" name="image" id="image" placeholder="Select user image">
                     
-                    <div class="row align-items-center">
-                        <div class="col-md">
-                            <div class="form-check form-switch form-check-reverse">
-                                <input class="form-check-input" type="checkbox" role="switch" id="technician">
-                                <label class="form-check-label" for="technician">
-                                    Technician
-                                </label>
-                            </div>
+                    <!-- <div class="input-group mb-3" id="pasSwitch">
+                        <div class="input-group-text">
+                            <input class="form-check-input" type="checkbox" value="techSelected" aria-label="Checkbox for following text input">
                         </div>
-                        <div class="col-md">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="nEmpleado" id="nEmpleado" placeholder="Your employee number">
-                                <label for="floatingInputValue">Your employee number</label>
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="nEmpleado" id="nEmpleado" placeholder="Your employee number">
+                            <label for="nEmpleado">Your employee number</label>
+                         </div>
+                    </div> -->
+
+                    <div class="form-floating mb-3" id="pasSwitch">
+                        <div class="input-group" >
+                            <div class="input-group-text">
+                                <input class="form-check-input" type="checkbox" value="techSelected" aria-label="Checkbox for following text input">
                             </div>
+                            <input type="text" class="form-control" name="nEmpleado" id="nEmpleado" placeholder="Your employee number">
+                            
                         </div>
                     </div>
 

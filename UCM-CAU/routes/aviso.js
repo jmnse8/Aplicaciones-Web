@@ -6,7 +6,10 @@ app.get("/avisosentrantes", function (request, response) {
     let panel = 1;
     let usuario = request.session.usuario;
     if(usuario)
-        response.render("avisosEntrantes.ejs", { usuario, panel});//request.session.usuario
+        if(usuario.nEmpleado != null)
+            response.render("avisosEntrantes.ejs", { usuario, panel});//request.session.usuario
+        else
+            response.redirect("misavisos");
     else
         response.redirect("login");
 });

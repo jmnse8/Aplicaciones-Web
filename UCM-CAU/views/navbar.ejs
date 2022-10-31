@@ -14,23 +14,25 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
 
-
+                <% if(usuario.nEmpleado != null){ %>
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/avisosentrantes">Avisos entrantes</a>
+                  <a class="nav-link <% if(panel === 1) { %> active <% } %>" <% if(panel === 1) { %> aria-current="page" <% } %>  href="/avisosentrantes">Avisos entrantes</a>
                 </li>
-
+                <% } %>
+                
+                
+                <li class="nav-item">
+                  <a class="nav-link <% if(panel === 2) { %> active <% } %>" <% if(panel === 2) { %> aria-current="page" <% } %>  href="/misavisos">Mis avisos</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link <% if(panel === 3) { %> active <% } %>" <% if(panel === 3) { %> aria-current="page" <% } %> href="/historico">Histórico de avisos</a>
+                </li>
                 
                 <% if(usuario.nEmpleado != null){ %>
                 <li class="nav-item">
-                  <a class="nav-link" href="/misavisos">Mis avisos</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/historico">Histórico de avisos</a>
+                  <a class="nav-link <% if(panel === 4) { %> active <% } %>" <% if(panel === 4) { %> aria-current="page" <% } %> href="/gestionusuarios">Gestion de usuarios</a>
                 </li>
                 <% } %>
-                <li class="nav-item">
-                  <a class="nav-link" href="/gestionusuarios">Gestion de usuarios</a>
-                </li>
             </ul>
 
             <form class="d-flex ms-3" role="search">

@@ -4,7 +4,42 @@
 </head>
 <body>
     <%- include("navbar", {usuario: usuario, panel: panel}) %>
-    <h5><%= usuario.name %></h5>
-    <h5>Historico</h5>
+    
+    <div class="container container-tabla">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Texto</th>
+                <th scope="col">Técnico</th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider">
+              <tr>
+                <td>Mark</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <td>Mark</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <td>Mark</td>
+                <td>Mark</td>
+                <td>Mark</td>
+                <td>@twitter</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="row">
+            <button class="btn button-tema"> Añadir</button>
+          </div>
+    </div>
 </body>
 </html>
