@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include("head") %>
+    <link rel="stylesheet" href="/css/profile.css">
+</head>
+<body>
+    <%- include("navbar", {usuario: usuario, panel: panel}) %>
+    <main class="container-fluid ">
+        <div class="row">
+            <div class="col-4 col-izq">
+                <div class="row">
+                    <img src="/imagen/<%=usuario.id%>"
+                 alt="foto usuario" class="rounded-circle foto-perfil">
+                </div>
+                <div class="row">
+                    <h2><%= usuario.name %></h2>
+                </div>
+            </div>
+
+            <div class="col-8">
+                <h5>hola <%= usuario.id %>  <%= usuario.email %></h5>
+             
+                <h5>Avisos entrantes</h5>
+            </div>
+        </div>
+    </main>
+
+    
+    
+</body>
+</html>

@@ -64,7 +64,7 @@ class UserService{
         else{
             imagen = fs.readFileSync("./public/images/logoUCM.jpg");
         }
-        console.log(imagen);
+        
         const errors = validationResult(request);
 
         if(errors.isEmpty()){

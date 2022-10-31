@@ -12,7 +12,7 @@
                 <img class="logo" src="/images/logoUCM.jpg" alt="logo UCM">
             </div>
             <div class="row m-3">
-                <form class="" action="/singup" method="post">
+                <form class="" action="/singup" method="post" enctype="multipart/form-data">
                     <div class="row g-2">
                         <div class="col-md"><div class="form-floating mb-3">
                             <input type="email" class="form-control" name="email" id="email" placeholder="Your e-mail">
@@ -48,11 +48,9 @@
                       </select>
                       <label for="floatingSelect">Perfil universitario</label>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input type="file" accept="image/*" class="form-control" name="image" id="image" placeholder="Select user image">
-                        <label for="floatingInputValue">Select user image</label>
-                    </div>
-
+                    
+                    <input type="file" accept="image/*" class="form-control mb-3" name="image" id="image" placeholder="Select user image">
+                    
                     <div class="row align-items-center">
                         <div class="col-md">
                             <div class="form-check form-switch form-check-reverse">

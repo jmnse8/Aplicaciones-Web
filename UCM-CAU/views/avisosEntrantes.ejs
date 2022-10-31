@@ -3,8 +3,7 @@
     <%- include("head") %>
 </head>
 <body>
-    <%- include("navbar", {usuario: usuario}) %>
-    <h5>hola <%= usuario.id %> <%= usuario.name %> <%= usuario.email %></h5>
+    <%- include("navbar", {usuario: usuario, panel: panel}) %>
     <h5>Avisos entrantes</h5>
 </body>
 </html>
