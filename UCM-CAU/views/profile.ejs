@@ -7,20 +7,45 @@
     <%- include("navbar", {usuario: usuario, panel: panel}) %>
     <main class="container-fluid ">
         <div class="row">
-            <div class="col-4 col-izq">
+            <div class="col-4 col-izq sombra">
                 <div class="row">
-                    <img src="/imagen/<%=usuario.id%>"
-                 alt="foto usuario" class="rounded-circle foto-perfil">
+                    <img src="/imagen/<%=usuario.id%>" alt="foto usuario" class="foto-perfil">
                 </div>
-                <div class="row">
-                    <h2><%= usuario.name %></h2>
+                <div class="row mt-3 color-fondo-tema">
+                    <h2 class="text-center"><b><%= usuario.name %></b></h2>
                 </div>
             </div>
 
-            <div class="col-8">
-                <h5>hola <%= usuario.id %>  <%= usuario.email %></h5>
-             
-                <h5>Avisos entrantes</h5>
+            <div class="col-7">
+                <div class="container container-tabla">
+                    <div class="row">
+                        <h5><b>Id:</b>  <%=usuario.id%></h5>
+                    </div>
+                    <div class="row">
+                        <h5><b>Correo electrónico:</b>  <%=usuario.email%></h5>
+                    </div>
+                    <div class="row">
+                        <h5><b>Contraseña:</b>  <%=usuario.password%></h5>
+                    </div>
+                    <div class="row">
+                        <h5><b>Perfil universitario:</b>  <%=usuario.perfil%></h5>
+                    </div>
+                    <div class="row">
+                        <h5>aaaa</h5>
+                    </div>
+                    <div class="row">
+                        <h5>aaaa</h5>
+                    </div>
+                    <div class="row">
+                        <h5>aaaa</h5>
+                    </div>
+                    <div class="row">
+                        <h5>aaaa</h5>
+                    </div>
+                    <div class="row">
+                        <h5>aaaa</h5>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

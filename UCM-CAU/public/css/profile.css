@@ -4,7 +4,12 @@
 }
 
 .foto-perfil{
-    margin: 2em;
+    border-radius: 8px;
+    margin-top: 1em;
     min-height: auto;
-    min-width: 80%;
+    min-width: 100%;
+}
+
+.sombra {
+    box-shadow: 0px 18.92px 37.84px rgb(38 26 25 / 25%);
 }
