@@ -59,7 +59,7 @@ class UserService{
     singup(request, response, reqFile) {
         let imagen = null;
         if (reqFile) {
-            imagen = request.file.buffer ;
+            imagen = request.file.buffer;
         }
         else{
             imagen = fs.readFileSync("./public/images/logoUCM.jpg");

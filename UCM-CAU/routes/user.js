@@ -27,11 +27,15 @@ app.get("/login", function (request, response) {
 });
 
 app.get("/singup", function (request, response) {
-    response.render("singup.ejs", { errores: {} });
+    let usuario = request.session.usuario;
+    if(usuario)
+        response.redirect("avisosentrantes");
+    else
+        response.render("singup.ejs", { errores: {} });
 });
 
 app.post("/login",
-    //check("email", "campo correo vacio").notEmpty(),
+    check("email", "campo correo vacio").notEmpty(),
     (request, response, next) => userService.login(request, response, next)
 );
 
