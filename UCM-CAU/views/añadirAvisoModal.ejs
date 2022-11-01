@@ -1,0 +1,57 @@
+
+<div class="modal fade" id="añadirAvisoModal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Añadir nuevo aviso de <%= usuario.name %></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Selecciona la categoría del aviso
+          <select class="form-select mt-3" id="floatingSelect" aria-label="Floating label select example">
+            <option value="sugerencia" selected>Sugerencia</option>
+            <option value="incidencia">Incidencia</option>
+            <option value="felicitacion">Felicitación</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button class="btn button-tema" data-bs-target="#añadirAvisoModal2" data-bs-dismiss="modal" data-bs-toggle="modal">Siguiente</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div class="modal fade" id="añadirAvisoModal2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Añadir nuevo aviso de <%= usuario.name %></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form class="" action="/añadirAviso" method="post">
+            <div class="modal-body">
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                      <option value="sugerencia" selected>Sugerencia</option>
+                      <option value="incidencia">Incidencia</option>
+                      <option value="felicitacion">Felicitación</option>
+                    </select>
+                    <label for="floatingSelect">Seleccionar tema</label>
+                </div>
+                    
+                <div class="form-floating">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 8em"></textarea>
+                    <label for="floatingTextarea">Comments</label>
+                </div>
+                
+            </div>
+
+            <div class="modal-footer">
+            <button type="button" class="btn btn-outlined-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn button-tema">Añadir</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>

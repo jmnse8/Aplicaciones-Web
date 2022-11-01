@@ -20,6 +20,11 @@ body {
   
 }
 
+.color-fondo-tema {
+  background-color: rgb(100, 100, 245);
+  color: #fff;
+}
+
 .button-tema {
   background-color: rgb(142, 142, 237);
   color: #fff;
@@ -28,4 +33,26 @@ body {
 .button-tema:hover {
   background-color: rgb(100, 100, 213);
   color: #fff;
+}
+
+.button-tema2 {
+  background-color: rgb(100, 100, 245);
+  color: #fff;
+}
+
+.button-tema2:hover {
+  background-color: rgb(66, 66, 213);
+  color: #fff;
+}
+
+.color-rojo{
+  color: rgb(255, 66, 66);
+}
+
+.color-verde{
+  color: rgb(89, 204, 93);
+}
+
+.color-amarillo{
+  color: rgb(238, 243, 0);
 }
