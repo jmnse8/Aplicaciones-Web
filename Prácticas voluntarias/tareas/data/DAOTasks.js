@@ -12,7 +12,8 @@ class DAOTasks {
                 callback(new Error("Error de conexión a la base de datos"));
             }
             else {//id, text, done y tags[]
-                connection.query("SELECT tar.idTarea, tar.texto, usu_tar.hecho, eti.texto FROM (((aw_tareas_usuarios as usu JOIN aw_tareas_user_tarea as usu_tar ON usu.idUser = usu_tar.idUser) JOIN aw_tareas_tareas as tar ON usu_tar.idTarea = tar.idTarea) JOIN aw_tareas_tareas_etiquetas as tar_eti ON tar.idTarea = tar_eti.idTarea) JOIN aw_tareas_etiquetas as eti ON tar_eti.idEtiqueta = eti.idEtiqueta WHERE usu_tar.hecho = true and usu.email = ?;",
+                connection.query(
+                    "SELECT tar.idTarea as id, tar.texto as texto, usu_tar.hecho as done, eti.texto as tags FROM (((aw_tareas_usuarios as usu JOIN aw_tareas_user_tarea as usu_tar ON usu.idUser = usu_tar.idUser) JOIN aw_tareas_tareas as tar ON usu_tar.idTarea = tar.idTarea) JOIN aw_tareas_tareas_etiquetas as tar_eti ON tar.idTarea = tar_eti.idTarea) JOIN aw_tareas_etiquetas as eti ON tar_eti.idEtiqueta = eti.idEtiqueta WHERE usu.email = ?;",
                     [email],
                     function (err, rows) {
                         connection.release(); // devolver al pool la conexión
@@ -24,23 +25,22 @@ class DAOTasks {
                                 callback(null, false); //no está el usuario con el password proporcionado
                             }
                             else {
-                                let tareas = [], tag = [];
+                                let tareas = [];
                                 for (let it of rows) {
-                                    console.log(it);
-                                   if (!tareas[it.idTarea])
-                                        tareas[it.idTarea] = {
-                                            "id": it.idTarea,
-                                            "text": it.text,
-                                            "done": it.hecho,
-                                            "tags": []
+                                    if(!tareas.find(t => t.id === it.id)){
+                                        let tarea = {
+                                            id: it.id,
+                                            text: it.texto,
+                                            done: (it.done === 1) ? true : false,
+                                            tags: []
                                         };
-
-                                    if (it.tag) tareas[it.id].tags.push(it.tag);
-
+                                        tareas.push(tarea);
+                                    }
+                                    if(it.tags){
+                                        tareas.find(t => t.id === it.id).tags.push(it.tags);
+                                    }
                                 }
-
-                                rows = tareas;
-                                callback(null, rows);
+                                callback(null, tareas);
                             }
                         }
                     });

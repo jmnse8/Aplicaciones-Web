@@ -1,0 +1,80 @@
+nav,
+button {
+    display: none !important;
+}
+
+body {
+    font-family:Arial, Helvetica, sans-serif;
+    display: block !important;
+    width: 100%;
+}
+
+.container::before {
+    font-size: 18px;
+    content: "TAREAS ";
+}
+
+.container {
+    font-size: 12px;
+}
+
+.align-items-center {
+    align-items: initial !important;
+}
+
+.col-4 {
+    flex: auto !important;
+    width : 1em !important;
+}
+.row {
+    display:flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+}
+
+p::before {
+    content: "•   ";
+}
+
+p {
+    font-weight: bold;
+}
+
+p::after {
+    content: ": ";
+}
+
+.text-md-center {
+    text-align: unset!important;
+}
+
+.text-md-start {
+    text-align: unset!important;
+}
+
+.etiqueta::before {
+    content: " (";
+}
+
+.etiqueta::after {
+    content: ")";
+}
+
+body::after {
+    content: "Copyright JM&J";
+    display: block;
+    text-align: center;
+}
+
+.tarjeta-finalizada {
+    text-decoration: line-through;
+}
+
+.tarjeta-finalizada::before{
+    content: "  •   " !important;
+    white-space: pre;
+}
+
+.p-3 {
+    padding: 0 !important;
+}
