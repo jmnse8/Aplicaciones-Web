@@ -48,7 +48,7 @@ class UserService{
                         response.render("login", {errores: false});
                     }
                 }
-            })
+            });
         }
         else{ //si hay errores
             console.log("la contraseña no coincide");

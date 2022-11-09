@@ -32,8 +32,26 @@ class DAOUsers {
         );
     }
 
+    
     getUserImageName(email, callback) {
-
+        this.pool.getConnection(function (err, con) {
+            if (err)
+                callback(err);
+            else {
+                con.query("SELECT Imagen FROM aw_tareas_usuarios WHERE email = ?",
+                 [email], function (err, result) {
+                    con.release();
+                    if (err) {
+                        callback(err);
+                    } else
+                        // Comprobar si existe una persona con el Id dado.
+                        if (result.length === 0)
+                            callback("No existe");
+                        else
+                            callback(null, result[0].Imagen);
+                });
+            }
+        });
     }
 
 }

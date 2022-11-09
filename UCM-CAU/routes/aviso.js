@@ -1,6 +1,8 @@
 "use strict";
 const express = require("express");
 const app = express();
+const AvisoService = require("../services/avisoService");
+let avisoService = new AvisoService();
 
 app.get("/avisosentrantes", function (request, response) {
     let panel = 1;
@@ -17,7 +19,12 @@ app.get("/avisosentrantes", function (request, response) {
 app.get("/misavisos", function (request, response) {
     let panel = 2;
     let usuario = request.session.usuario;
-    response.render("misAvisos.ejs",  { usuario, panel});//request.session.usuario
+    avisoService.getMisAvisos(usuario, (avisos) => {
+        console.log('Router-------');
+        console.log(avisos);
+        response.render("misAvisos.ejs",  { usuario, panel, avisos});
+    });
+    //request.session.usuario
 });
 
 app.get("/historico", function (request, response) {
