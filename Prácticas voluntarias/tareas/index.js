@@ -15,26 +15,38 @@ const pool = mysql.createPool({
 let daoUser = new DAOUsers(pool);
 let daoTask = new DAOTasks(pool);
 
-daoTask.getAllTasks("bill.puertas@ucm.es", (err, result) =>{
-    if(err){
+/* daoTask.getAllTasks("bill.puertas@ucm.es", (err, result) => {
+    if (err) {
         console.log(err.message);
         response.end();
     }
-    else if(!result){
+    else if (!result) {
+        console.log("no existe ese usuario");
+    }
+    else {
+        console.log(result);
+    }
+}); */
+
+let task = {
+    text: "Terminar el DAOTask",
+    done: 1,
+    tags: [
+        "practica", "aw", "prueba"
+    ]
+};
+
+daoTask.insertTask("bill.puertas@ucm.es", task, (err, result) => {
+    if (err) {
+        console.log(err.message);
+        response.end();
+    }
+    else if (!result) {
         console.log("no existe ese usuario");
         //response.render("login", {errores: false});
     }
-    else{
+    else {
         console.log(result);
-        /* for (let it of result) {
-            console.log(it.id + ' '+ it.text + ' ' + it.done);
-            if(it.tags){
-                for(let ut of it.tags){
-                    console.log(ut);
-                }
-            }
-            
-        } */
     }
 });
 // Definición de las funciones callback

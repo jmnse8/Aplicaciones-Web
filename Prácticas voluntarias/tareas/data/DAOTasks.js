@@ -27,7 +27,7 @@ class DAOTasks {
                             else {
                                 let tareas = [];
                                 for (let it of rows) {
-                                    if(!tareas.find(t => t.id === it.id)){
+                                    if (!tareas.find(t => t.id === it.id)) {
                                         let tarea = {
                                             id: it.id,
                                             text: it.texto,
@@ -36,7 +36,7 @@ class DAOTasks {
                                         };
                                         tareas.push(tarea);
                                     }
-                                    if(it.tags){
+                                    if (it.tags) {
                                         tareas.find(t => t.id === it.id).tags.push(it.tags);
                                     }
                                 }
@@ -48,15 +48,197 @@ class DAOTasks {
         }
         );
     }
+
     insertTask(email, task, callback) {
+        getIdUser(email, this.pool, (idUser) => {
+            insertTask(task.text, this.pool, (idTarea) => {
+                joinUserTask(idUser, idTarea, task.done, this.pool, (bien) => {
+                    insertTags(task.tags, this.pool, (idTags) => {
+                        idTags.forEach(t => joinTaskTag(idTarea, t,this.pool, (bien2) => {}));
+                    });
+                });
+            });
+        });
 
     }
+
+
     markTaskDone(idTask, callback) {
 
     }
     deleteCompleted(email, callback) {
 
     }
+
+
+}
+
+//------------------- FUNCIONES AUXILIARES PARA INSERTAR TAREAS -------------------
+
+
+function getIdUser(email, pool, callback) {
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            callback(new Error("Error de conexión a la base de datos"));
+        }
+        else {
+            connection.query(
+                "SELECT IdUser from aw_tareas_usuarios where email = ?",
+                [email],
+                function (err, rows) {
+
+                    connection.release(); // devolver al pool la conexión
+                    if (err) {
+                        callback(false);
+                    }
+                    else {
+                        if (rows.length === 0) {
+                            callback(false); //no está el usuario con el email proporcionado
+                        }
+                        else {
+                            let idUser = rows[0].IdUser;
+                            callback(idUser);
+                        }
+                    }
+                });
+        }
+    }
+    );
+
+}
+
+function insertTask(texto, pool, callback){
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            callback(new Error("Error de conexión a la base de datos"));
+        }
+        else {
+            connection.query(
+                "INSERT INTO aw_tareas_tareas(texto) VALUES (?)",
+                [texto],
+                function (err, rows) {
+                    connection.release(); // devolver al pool la conexión
+                    if (err) {
+                        callback(false);
+                    }
+                    else {
+                        if (rows.length === 0) {
+                            callback(false); //no está el usuario con el email proporcionado
+                        }
+                        else {
+                            //console.log(rows);
+                            let idTarea = rows.insertId;
+                            callback(idTarea);
+                        }
+                    }
+                }
+            );
+        }
+    });
+}
+
+function joinUserTask(idUser, idTarea, done, pool, callback){
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            callback(new Error("Error de conexión a la base de datos"));
+        }
+        else {
+            connection.query(
+                "INSERT INTO aw_tareas_user_tarea (IdUser,IdTarea,hecho) VALUES (?,?,?)",
+                [idUser, idTarea, done],
+                function (err, rows) {
+                    connection.release(); // devolver al pool la conexión
+                    if (err) {
+                        callback(false);
+                    }
+                    else {
+                        if (rows.length === 0) {
+                            callback(false); //no está el usuario con el email proporcionado
+                        }
+                        else {
+                            //console.log(rows);
+                            //let idTarea = rows[0].insertId;
+                            callback(true);
+                        }
+                    }
+                }
+            );
+        }
+    });
+}
+
+function insertTags(tags, pool, callback){
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            callback(new Error("Error de conexión a la base de datos"));
+        }
+        else {
+            let sql = "INSERT INTO aw_tareas_etiquetas (texto) VALUES ";
+            for(let i = 0; i < tags.length; i++){
+                sql += "(?";
+                if( i < tags.length - 1) sql += "),";
+                else sql += ")";
+            }
+            
+            //console.log(sql);
+            connection.query(
+                sql,
+                [...tags],
+                function (err, rows) {
+                    connection.release(); // devolver al pool la conexión
+                    if (err) {
+                        console.error(err);
+                        callback(false);
+                    }
+                    else {
+                        if (rows.length === 0) {
+                            callback(false); //no está el usuario con el email proporcionado
+                        }
+                        else {
+                            //console.log(rows);
+                            let idTags = [];
+                            let firstId = rows.insertId;
+                            for(let i = 0; i < tags.length; i++){
+                                idTags.push(firstId + i);
+                            }
+                            console.log(rows);
+                            callback(idTags);
+                        }
+                    }
+                }
+            );
+        }
+    });
+}
+
+function joinTaskTag(idTask, idTag, pool, callback){
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            callback(new Error("Error de conexión a la base de datos"));
+        }
+        else {
+            connection.query(
+                "INSERT INTO aw_tareas_tareas_etiquetas (idEtiqueta, idTarea) VALUES (?,?)",
+                [idTag,idTask],
+                function (err, rows) {
+                    connection.release(); // devolver al pool la conexión
+                    if (err) {
+                        callback(false);
+                    }
+                    else {
+                        if (rows.length === 0) {
+                            callback(false); //no está el usuario con el email proporcionado
+                        }
+                        else {
+                            //console.log(rows);
+                            //let idTarea = rows[0].insertId;
+                            callback(true);
+                        }
+                    }
+                }
+            );
+        }
+    });
 }
 
 module.exports = DAOTasks;
