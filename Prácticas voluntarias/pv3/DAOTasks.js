@@ -45,17 +45,48 @@ class DAOTasks {
                         }
                     });
             }
-        }
-        );
+        });
     }
+    /*
     insertTask(email, task, callback) {
-
+        
     }
+    */
     markTaskDone(idTask, callback) {
-
+        this.pool.getConnection(function (err, connection) {
+            if (err) {
+                callback(new Error("Error de conexión a la base de datos"));
+            } else {
+                connection.query("UPDATE aw_tareas_user_tarea SET hecho = true WHERE IdTarea = ?",
+                idTask,
+                function (err, result) {
+                    connection.release(); 
+                        if (err) {
+                            callback(new Error("Error de acceso a la base de datos"));
+                        }
+                        else{
+                            callback(null, true);
+                        }
+                });
+            }
+        });    
     }
-    deleteCompleted(email, callback) {
-
+    
+    deleteCompleted(email, callback) {  
+        this.pool.getConnection(function (err, connection) {
+            if (err) {
+                callback(new Error("Error de conexión a la base de datos"));
+            } else {
+                connection.query("DELETE FROM aw_tareas_tareas t JOIN aw_tareas_user_tarea tu ON t.IdTarea = tu.IdTarea JOIN aw_tareas_usuarios u ON tu.IdUser = u.IdUser WHERE u.email=?",
+                    email,
+                    function (err, result) {
+                        connection.release(); 
+                        if (err) {
+                            callback(new Error("Error de acceso a la base de datos"));
+                        }
+                    });
+            }
+        }); 
     }
 }
 
