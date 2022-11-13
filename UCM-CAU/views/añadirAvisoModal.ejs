@@ -1,47 +1,65 @@
 
-<div class="modal fade" id="añadirAvisoModal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Añadir nuevo aviso de <%= usuario.name %></h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Selecciona la categoría del aviso
-          <select class="form-select mt-3" id="floatingSelect" aria-label="Floating label select example">
-            <option value="sugerencia" selected>Sugerencia</option>
-            <option value="incidencia">Incidencia</option>
-            <option value="felicitacion">Felicitación</option>
-          </select>
-        </div>
-        <div class="modal-footer">
-          <button class="btn button-tema" data-bs-target="#añadirAvisoModal2" data-bs-dismiss="modal" data-bs-toggle="modal">Siguiente</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-<div class="modal fade" id="añadirAvisoModal2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="añadirAvisoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="staticBackdropLabel">Añadir nuevo aviso de <%= usuario.name %></h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form class="" action="/añadirAviso" method="post">
+        <form class="" action="/newAviso" method="post">
             <div class="modal-body">
-                <div class="form-floating mb-3">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                      <option value="sugerencia" selected>Sugerencia</option>
-                      <option value="incidencia">Incidencia</option>
-                      <option value="felicitacion">Felicitación</option>
+                <div class=" mb-3">
+                    <div class="middle">
+                      <label>
+                        <input type="radio" name="radio" value="sugerencia" onchange="otherSelected()" checked/>
+                        <div class="sugerencia box">
+                          <span>Sugerencia</span>
+                        </div>
+                      </label>
+                      <label>
+                        <input type="radio" name="radio" value="incidencia" onchange="otherSelected()"/>
+                        <div class="incidencia box">
+                          <span>Incidencia</span>
+                        </div>
+                      </label>
+                      <label>
+                        <input type="radio" name="radio" value="felicitacion" id="felicitacion" onchange="felicitacionSelected()"/>
+                        <div class="felicitacion box">
+                          <span>Felicitación</span>
+                        </div>
+                      </label>
+                    </div>
+
+                    <select class="form-select mt-3" name="suginc" id="sug-inc">
+                      <% temas.forEach( tema => { %>
+                        <optgroup label = "<%= tema.titulo %>">
+                          <% tema.temas.forEach( t => { %>
+                            <option value="<%= tema.titulo %>-<%= t %>"><%= t %></option>
+                          <% }); %>
+                        </optgroup>
+                      <% }); %>
                     </select>
-                    <label for="floatingSelect">Seleccionar tema</label>
+
+                    <select class="form-select mt-3" name="fel" id="fel" style="display: none;">
+                      <option value="felicitacion-Archivo Universitario">Archivo Universitario</option>
+                      <option value="felicitacion-Asesoría Jurídica">Asesoría Jurídica</option>
+                      <option value="felicitacion-Biblioteca">Biblioteca</option>
+                      <option value="felicitacion-Centro de Información">Centro de Información</option>
+                      <option value="felicitacion-Departamentos docentes">Departamentos docentes</option>
+                      <option value="felicitacion-Inspección de Servicios">Inspección de Servicios</option>
+                      <option value="felicitacion-Oficina de Gestión de Infraestructuras y Mantenimiento">Oficina de Gestión de Infraestructuras y Mantenimiento</option>
+                      <option value="felicitacion-Servicio de Administración">Servicio de Administración</option>
+                      <option value="felicitacion-Servicios Informáticos">Servicios Informáticos</option>
+                      <option value="felicitacion-Servicio de Documentación">Servicio de Documentación</option>
+                      <option value="felicitacion-Servicio de Imprenta">Servicio de Imprenta</option>
+                      <option value="felicitacion-Servicio de Cafetería">Servicio de Cafetería</option>
+                      <option value="felicitacion-Toda la Universidad">Toda la Universidad</option>
+                    </select>
+                    
                 </div>
                     
                 <div class="form-floating">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 8em"></textarea>
+                    <textarea class="form-control" placeholder="Leave a comment here" name="observaciones" id="floatingTextarea" style="height: 8em"></textarea>
                     <label for="floatingTextarea">Comments</label>
                 </div>
                 

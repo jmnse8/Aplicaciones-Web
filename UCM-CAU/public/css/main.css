@@ -60,3 +60,82 @@ body {
 .color-amarillo{
   color: rgb(238, 243, 0);
 }
+
+.filaTabla{
+  transition: 0.3s;
+}
+
+.filaTabla:hover {
+  background-color: rgb(100, 100, 245);
+  color: #fff;
+  cursor: pointer;
+}
+
+
+/* 
+BOTONES AÑADIR TAREA
+*/
+
+.middle {
+  width: 100%;
+  text-align: center;
+}
+.middle input[type="radio"] {
+  display: none;
+}
+.middle input[type="radio"]:checked + .box {
+  background-color: rgb(100, 100, 213);
+}
+.middle input[type="radio"]:checked + .box span {
+  color: white;
+  transform: translateY(20px);
+}
+.middle input[type="radio"]:checked + .box span:before {
+  transform: translateY(0px);
+  opacity: 1;
+}
+.middle .box {
+  border-radius: 0.25em;
+  width: 15em;
+  height: 7em;
+  background-color: rgb(142, 142, 237);
+  transition: all 250ms ease;
+  will-change: transition;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+}
+.middle .box:active {
+  transform: translateY(10px);
+}
+.middle .box span {
+  position: absolute;
+  transform: translate(0, 30px);
+  left: 0;
+  right: 0;
+  transition: all 300ms ease;
+  font-size: 1.5em;
+  user-select: none;
+  color: rgb(190, 190, 190);
+}
+.middle .box span:before {
+  font-size: 1.2em;
+  font-family: FontAwesome;
+  display: block;
+  transform: translateY(-80px);
+  opacity: 0;
+  transition: all 300ms ease-in-out;
+  font-weight: normal;
+  color: white;
+}
+
+.middle .sugerencia span:before {
+  content: "\f0eb";
+}
+.middle .incidencia span:before {
+  content: "\f06a";
+}
+.middle .felicitacion span:before {
+  content: "\f004";
+}

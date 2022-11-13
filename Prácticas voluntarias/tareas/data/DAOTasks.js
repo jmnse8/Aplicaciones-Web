@@ -89,7 +89,7 @@ class DAOTasks {
                 callback(new Error("Error de conexión a la base de datos"));
             } else {
                 connection.query("DELETE FROM aw_tareas_tareas t JOIN aw_tareas_user_tarea tu ON t.IdTarea = tu.IdTarea JOIN aw_tareas_usuarios u ON tu.IdUser = u.IdUser WHERE u.email=?",
-                    email,
+                    [email],
                     function (err, result) {
                         connection.release(); 
                         if (err) {

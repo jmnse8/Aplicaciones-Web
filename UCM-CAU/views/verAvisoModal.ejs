@@ -1,0 +1,63 @@
+<div class="modal fade" id="verMiavisoModal<%=avi.Id%>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header color-fondo-tema">
+                <h1 class="modal-title fs-5" id="verMiavisoModalLabel">Aviso <%= avi.Id %>: <%= avi.categoria %>
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-auto"><h5>Fecha: </h5></div>
+                    <div class="col-auto"><p>
+                        <%= avi.fecha %>
+                    </p></div>
+                    
+                    
+                </div>
+                <div class="row">
+                    <div class="col-auto"><h5>Comunicaciones: </h5></div>
+                    <div class="col-auto"><p>
+                        <%= avi.tema %>
+                    </p></div>
+                    
+                    
+                </div>
+                <div class="row">
+                    <div class="col-auto"><h5>Pefil: </h5></div>
+                    <div class="col-auto"><p>
+                        <%= usuario.perfil %>
+                    </p></div>
+                    
+                    
+                </div>
+                <div class="row">
+                    <h5>Observaciones: </h5>
+                </div>
+                <div class="row">
+                    <div class="card">
+                        <div class="card-body">
+                            <p>
+                                <%= avi.observaciones %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <h5>Comentarios del técnico: </h5>
+                </div>
+                <div class="row">
+                    <p>
+                        <%= avi.comentarios %>
+                    </p>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+        </div>
+    </div>
+</div>

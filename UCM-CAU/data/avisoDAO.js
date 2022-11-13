@@ -11,7 +11,7 @@ class AvisoDAO {
     */
 
     getMisAvisos(userId, callback) {
-        console.log(userId);
+        //console.log(userId);
         this.pool.getConnection((err, connection) => {
             if (err) {
                 callback(new Error("Error en la conexión a la base de datos"));
@@ -45,7 +45,33 @@ class AvisoDAO {
                         }
                     })
             }
-        })
+        });
+    }
+
+    newAviso(userId, tema,  observaciones, categoria, fecha, callback) {
+        this.pool.getConnection((err, connection) => {
+            if (err) {
+                callback(new Error("Error en la conexión a la base de datos"));
+            }            else {
+                const sql = "INSERT INTO ucm_aw_cau_avi_avisos ( usu_id, nEmpleado, tema, comentarios, observaciones, activo, categoria, fecha) VALUES (?, NULL, ?, '', ?, 1, ?, ?);";
+                connection.query(sql, [userId, tema,  observaciones, categoria, fecha],
+                    function (err, row) {
+                        connection.release();
+                        if (err) {
+                            callback(new Error("Error al acceso a la base de datos"));
+                            console.log(err.stack);
+                        }
+                        else {
+                            if (row.length === 0) {
+                                callback(null, false);
+                            }
+                            else {
+                                callback(null, true);
+                            }
+                        }
+                    })
+            }
+        });
     }
 
 }

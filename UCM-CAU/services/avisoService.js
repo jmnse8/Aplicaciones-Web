@@ -31,6 +31,40 @@ class AvisoService {
         
     }
 
+    newAviso(request, response) {
+        const errors = validationResult(request);
+
+        if(errors.isEmpty()){//new Date().toISOString().slice(0, 19).replace('T', ' ')
+            let fecha = new Date().toISOString();
+            let usuario = request.session.usuario;
+
+            let categoria = request.body.radio;
+            let tema;
+            if(categoria === 'felicitacion'){
+                tema = request.body.fel;
+            }
+            else{
+                tema = request.body.suginc;
+            }
+            this.avisoDAO.newAviso(usuario.id, tema, 
+                request.body.observaciones, categoria, fecha,
+                (err, result) =>{
+                    if(err){
+                        console.log(err.message);
+                        response.end();
+                    }
+                    else{
+                        if(!result){
+                            response.redirect("misAvisos",{errores: false});
+                        }
+                        else{
+                            response.redirect("misAvisos");
+                        }
+                    }
+            });
+        }
+    }
+
 }
 
 module.exports = AvisoService;

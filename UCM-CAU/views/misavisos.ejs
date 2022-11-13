@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <%- include("head") %>
+    
+    <script src="/scripts/añadirAviso.js"></script>
 </head>
 <body>
     <%- include("navbar", {usuario: usuario, panel: panel}) %>
@@ -19,7 +21,7 @@
           </thead>
           <tbody class="table-group-divider">
             <% avisos.forEach( avi => { %>
-              <tr>
+              <tr class="filaTabla" data-bs-toggle="modal" data-bs-target="#verMiavisoModal<%=avi.Id%>">
                 <td><%=avi.fecha%></td>
 
                 <% if(avi.categoria === 'sugerencia') {%>
@@ -33,6 +35,7 @@
                 <td><%=avi.observaciones%></td>
                 <td><%=avi.Id%></td><!-- cambiar -->
               </tr>
+              <%- include("verAvisoModal", {usuario: usuario,avi: avi}) %>
             <% }); %> 
             
             
@@ -44,6 +47,7 @@
 						data-bs-target="#añadirAvisoModal"> Añadir</button>
         </div>
   </div>
-  <%- include("añadirAvisoModal", {usuario: usuario}) %>
+  
+  <%- include("añadirAvisoModal", {usuario: usuario, temas: temas}) %>
 </body>
 </html>
