@@ -56,7 +56,7 @@ class UserService{
         }
     };
 
-    singup(request, response, reqFile) {
+    signUp(request, response, reqFile) {
         let imagen = null;
         if (reqFile) {
             imagen = request.file.buffer;
@@ -77,26 +77,29 @@ class UserService{
                         response.end();
                     }
                     else{
-                        this.userDAO.getUser(request.body.email, (err, result) => {
-                            let user = {
-                                id : result.Id,
-                                email : result.email,
-                                name : result.nombre,
-                                password : result.contraseña,
-                            //let bitmap = fs.readFileSync(result.imagen);
-                                //image : Buffer.from(result.Imagen).toString('base64'),
-                                perfil : result.perfil,
-                                nEmpleado : result.nEmpleado,
-                                activo : result.activo
-                            }
-                            request.session.usuario = user;
-                            response.redirect("avisosEntrantes");
-                        });
+                        var emailFormat = "/\S+@\S+\.\S+/";
+                        if (emailFormat.test(request.body.email)){
+                            this.userDAO.getUser(request.body.email, (err, result) => {
+                                let user = {
+                                    id : result.Id,
+                                    email : result.email,
+                                    name : result.nombre,
+                                    password : result.contraseña,
+                                    //let bitmap = fs.readFileSync(result.imagen);
+                                    //image : Buffer.from(result.Imagen).toString('base64'),
+                                    perfil : result.perfil,
+                                    nEmpleado : result.nEmpleado,
+                                    activo : result.activo
+                                }
+                                request.session.usuario = user;
+                                response.redirect("avisosEntrantes");
+                            });
+                        }
                     }
             });
         }
         else{ //aprender a usar esto
-            response.render("signup.ejs");//, {errores: errors.mapped()}
+            response.render("signUp.ejs");//, {errores: errors.mapped()}
         }
     };
 
