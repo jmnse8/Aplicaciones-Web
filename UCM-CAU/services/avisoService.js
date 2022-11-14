@@ -64,6 +64,25 @@ class AvisoService {
         }
     }
 
+    getAvisoByText(query, callback) {
+        this.avisoDAO.getAvisoByText(query,(err, result) => {
+            if (err) {
+                console.log(err.message);
+                callback(false);
+            }
+            else if (!result) {
+                console.log("no hay usuarios con ese nombre");
+                callback(false);
+            }
+            else {
+                result.forEach(element => {
+                    element.fecha = element.fecha.slice(0, 19).replace('T', ' ');
+                });
+                callback(result);
+            }
+        });
+    }
+
 }
 
 module.exports = AvisoService;

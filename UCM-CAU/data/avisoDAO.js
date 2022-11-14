@@ -72,7 +72,40 @@ class AvisoDAO {
                     })
             }
         });
-    }
+    };
+
+    getAvisoByText(query,callback) {
+        this.pool.getConnection((err, connection) => {
+            if (err) {
+                callback(new Error("Error en la conexión a la base de datos"));
+            }
+            else {
+                const sql = "SELECT * FROM ucm_aw_cau_avi_avisos WHERE observaciones LIKE ?";
+                connection.query(sql,['%' + query + '%'],
+                    function (err, row) {
+                        connection.release();
+                        if (err) {
+                            callback(new Error("Error al acceso a la base de datos"));
+                            console.log(err.stack);
+                        }
+                        else {
+                            if (row.length === 0) {
+                                callback(null, false);
+                            }
+                            else {
+                                let avisos = [];
+                                row.forEach(element => {
+                                    let json = JSON.parse(JSON.stringify(element));
+                                    avisos.push(json);
+                                });
+                                
+                                callback(null, avisos);
+                            }
+                        }
+                    })
+            }
+        });
+    };
 
 }
 

@@ -35,15 +35,15 @@
                 <% } %>
             </ul>
 
-            <form class="d-flex ms-3" role="search">
+            <form class="d-flex ms-3" action="/search" method="post" role="search">
                 <div class="input-group">
                   
-                  <input type="search" class="form-control" placeholder="Search" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                  
+                  <input type="search" class="form-control" name="query" placeholder="Search" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                  <% if(usuario.nEmpleado != null){ %>
                   <div class="input-group-text">
-                    <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input">
+                    <input class="form-check-input mt-0" name="checkUsuario" type="checkbox" value="usuario" aria-label="Checkbox for following text input">
                   </div>
-
+                  <% } %>
                   <button class="btn button-tema" type="submit" id="button-addon1">
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </button>

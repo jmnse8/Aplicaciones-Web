@@ -136,6 +136,39 @@ class UserDAO {
             }
         });
     };
+
+    getUserByName(query,callback) {
+        this.pool.getConnection((err, connection) => {
+            if (err) {
+                callback(new Error("Error en la conexión a la base de datos"));
+            }
+            else {
+                const sql = "SELECT * FROM ucm_aw_cau_usu_usuarios WHERE nombre LIKE ?";
+                connection.query(sql,['%' + query + '%'],
+                    function (err, row) {
+                        connection.release();
+                        if (err) {
+                            callback(new Error("Error al acceso a la base de datos"));
+                            console.log(err.stack);
+                        }
+                        else {
+                            if (row.length === 0) {
+                                callback(null, false);
+                            }
+                            else {
+                                let usuarios = [];
+                                row.forEach(element => {
+                                    let json = JSON.parse(JSON.stringify(element));
+                                    usuarios.push(json);
+                                });
+                                
+                                callback(null, usuarios);
+                            }
+                        }
+                    })
+            }
+        });
+    };
 }
 
 module.exports = UserDAO;

@@ -138,6 +138,22 @@ class UserService {
         });
     };
 
+    getUserByName(query, callback) {
+        this.userDAO.getUserByName(query,(err, result) => {
+            if (err) {
+                console.log(err.message);
+                callback(false);
+            }
+            else if (!result) {
+                console.log("no hay usuarios con ese nombre");
+                callback(false);
+            }
+            else {
+                callback(result);
+            }
+        });
+    }
+
     getProfile(idUsu, callback) {
 
         this.userDAO.getUserById(idUsu, function (err, user) {

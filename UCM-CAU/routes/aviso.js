@@ -57,7 +57,23 @@ app.get("/gestionUsuarios", function (request, response) {
 
 app.post("/newAviso",(request, response) => avisoService.newAviso(request, response));
 
-
+app.post("/search", (request, response) => {
+    let panel = 0;
+    let usuario = request.session.usuario;
+    let buscarUsuario = request.body.checkUsuario;
+    let query = request.body.query;
+    if(buscarUsuario){// Solo lo puede hacer el perfil técnico
+        userService.getUserByName(query, (usuarios) => {
+            response.render("gestionUsuarios.ejs",  { usuario, usuarios, panel});
+        });
+    }
+    else{
+        avisoService.getAvisoByText(query, (avisos) => {
+            let temas = temas1[usuario.perfil];
+            response.render("misAvisos.ejs",  { usuario, avisos, panel, temas});
+        });
+    }
+});
 
 
 module.exports = app;
