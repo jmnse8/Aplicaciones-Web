@@ -1,8 +1,13 @@
 "use strict";
 const express = require("express");
 const app = express();
+
 const AvisoService = require("../services/avisoService");
 let avisoService = new AvisoService();
+
+const UserService = require("../services/userService");
+let userService = new UserService();  
+
 const temas1 = require("../resources/seleccionarTema");
 
 app.get("/avisosentrantes", function (request, response) {
@@ -35,10 +40,19 @@ app.get("/historico", function (request, response) {
     response.render("historico.ejs", { usuario, panel});//request.session.usuario
 });
 
-app.get("/gestionusuarios", function (request, response) {
+app.get("/gestionUsuarios", function (request, response) {
     let panel = 4;
     let usuario = request.session.usuario;
-    response.render("gestionUsuarios.ejs", { usuario, panel});//request.session.usuario
+    if(usuario)
+        if(usuario.nEmpleado != null)
+            userService.getAllUsers((usuarios) => {
+                response.render("gestionUsuarios.ejs",  { usuario, usuarios, panel});
+            });
+        else
+            response.redirect("misavisos");
+    else
+        response.redirect("login");
+    
 });
 
 app.post("/newAviso",(request, response) => avisoService.newAviso(request, response));

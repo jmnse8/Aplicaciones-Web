@@ -139,3 +139,7 @@ BOTONES AÑADIR TAREA
 .middle .felicitacion span:before {
   content: "\f004";
 }
+
+.basura:hover {
+  color: rgb(255, 66, 66);
+}

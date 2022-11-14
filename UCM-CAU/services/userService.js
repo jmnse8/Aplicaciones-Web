@@ -6,8 +6,8 @@ const UserDAO = require("../data/userDAO");
 
 
 
-class UserService{
-    constructor(){
+class UserService {
+    constructor() {
         this.userDAO = new UserDAO();
     }
 
@@ -16,43 +16,43 @@ class UserService{
         let email = request.body.email;
         let password = request.body.password;
 
-        if(errors.isEmpty()){
-            this.userDAO.getUser(email, (err, result) =>{
-                if(err){
+        if (errors.isEmpty()) {
+            this.userDAO.getUser(email, (err, result) => {
+                if (err) {
                     console.log(err.message);
                     response.end();
                 }
-                else if(!result){
+                else if (!result) {
                     console.log("no existe ese usuario");
-                    response.render("login", {errores: false});
+                    response.render("login", { errores: false });
                 }
-                else{
+                else {
                     console.log("usuario encontrado");
-                    if(password === result.contraseña){
+                    if (password === result.contraseña) {
                         let user = {
-                            id : result.Id,
-                            email : result.email,
-                            name : result.nombre,
-                            password : result.contraseña,
-                        //let bitmap = fs.readFileSync(result.imagen);
+                            Id: result.Id,
+                            email: result.email,
+                            nombre: result.nombre,
+                            contraseña: result.contraseña,
+                            //let bitmap = fs.readFileSync(result.imagen);
                             //image : Buffer.from(result.Imagen).toString('base64'),
-                            perfil : result.perfil,
-                            nEmpleado : result.nEmpleado,
-                            activo : result.activo
+                            perfil: result.perfil,
+                            nEmpleado: result.nEmpleado,
+                            activo: result.activo
                         }
                         request.session.usuario = user;
                         response.redirect("avisosEntrantes");
                     }
-                    else{
+                    else {
                         console.log("la contraseña no coincide" + password);
-                        response.render("login", {errores: false});
+                        response.render("login", { errores: false });
                     }
                 }
             });
         }
-        else{ //si hay errores
+        else { //si hay errores
             console.log("la contraseña no coincide");
-            response.render("login", {errores:errors.mapped()});
+            response.render("login", { errores: errors.mapped() });
         }
     };
 
@@ -61,44 +61,44 @@ class UserService{
         if (reqFile) {
             imagen = request.file.buffer;
         }
-        else{
+        else {
             imagen = fs.readFileSync("./public/images/logoUCM.jpg");
         }
-        
+
         const errors = validationResult(request);
 
-        if(errors.isEmpty()){
+        if (errors.isEmpty()) {
             this.userDAO.newUser(
                 request.body.name, request.body.email, request.body.password,
-                 imagen, request.body.perfil, request.body.nEmpleado,
-                (err, result) =>{
-                    if(err){
+                imagen, request.body.perfil, request.body.nEmpleado,
+                (err, result) => {
+                    if (err) {
                         console.log(err.message);
                         response.end();
                     }
-                    else{
-                        var emailFormat = "/\S+@\S+\.\S+/";
-                        if (emailFormat.test(request.body.email)){
+                    else {
+                        let emailFormat = "/\S+@\S+\.\S+/";
+                        if (emailFormat.test(request.body.email)) {
                             this.userDAO.getUser(request.body.email, (err, result) => {
                                 let user = {
-                                    id : result.Id,
-                                    email : result.email,
-                                    name : result.nombre,
-                                    password : result.contraseña,
+                                    Id: result.Id,
+                                    email: result.email,
+                                    nombre: result.nombre,
+                                    contraseña: result.contraseña,
                                     //let bitmap = fs.readFileSync(result.imagen);
                                     //image : Buffer.from(result.Imagen).toString('base64'),
-                                    perfil : result.perfil,
-                                    nEmpleado : result.nEmpleado,
-                                    activo : result.activo
+                                    perfil: result.perfil,
+                                    nEmpleado: result.nEmpleado,
+                                    activo: result.activo
                                 }
                                 request.session.usuario = user;
                                 response.redirect("avisosEntrantes");
                             });
                         }
                     }
-            });
+                });
         }
-        else{ //aprender a usar esto
+        else { //aprender a usar esto
             response.render("signUp.ejs");//, {errores: errors.mapped()}
         }
     };
@@ -119,6 +119,41 @@ class UserService{
                 }
             });
         }
+    };
+
+
+    getAllUsers(callback) {
+        this.userDAO.getAllUsers((err, result) => {
+            if (err) {
+                console.log(err.message);
+                callback(false);
+            }
+            else if (!result) {
+                console.log("no hay usuarios activos");
+                callback(false);
+            }
+            else {
+                callback(result);
+            }
+        });
+    };
+
+    getProfile(idUsu, callback) {
+
+        this.userDAO.getUserById(idUsu, function (err, user) {
+            if (err) {
+                console.log(err.message);
+                callback(false);
+            }
+            else if (!user) {
+                console.log("usuaio no encontrado");
+                callback(false);
+            }
+            else {
+                callback(user);
+            }
+        });
+
     };
 };
 

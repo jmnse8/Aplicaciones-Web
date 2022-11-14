@@ -10,31 +10,30 @@ class AvisoService {
 
     getMisAvisos(user, callback){
         //const errors = validationResult(request);
-        this.avisoDAO.getMisAvisos(user.id, (err, result) => {
+        this.avisoDAO.getMisAvisos(user.Id, (err, result) => {
             if(err){
                 console.log(err.message);
                 //response.end();
                 callback(false);
             }
             else if(!result){
-                console.log("no existe ese usuario");
+                console.log("No tiene avisos");
                 callback(false);
                 //response.render("login", {errores: false});
             }
             else{
-                //console.log('SA-------');
-                //console.log(result);
+                result.forEach(element => {
+                    element.fecha = element.fecha.slice(0, 19).replace('T', ' ');
+                });
                 callback(result);
             }
-            //return [];
         });
-        
     }
 
     newAviso(request, response) {
         const errors = validationResult(request);
 
-        if(errors.isEmpty()){//new Date().toISOString().slice(0, 19).replace('T', ' ')
+        if(errors.isEmpty()){
             let fecha = new Date().toISOString();
             let usuario = request.session.usuario;
 
@@ -46,7 +45,7 @@ class AvisoService {
             else{
                 tema = request.body.suginc;
             }
-            this.avisoDAO.newAviso(usuario.id, tema, 
+            this.avisoDAO.newAviso(usuario.Id, tema, 
                 request.body.observaciones, categoria, fecha,
                 (err, result) =>{
                     if(err){
