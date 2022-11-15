@@ -56,6 +56,24 @@ class UserService {
         }
     };
 
+    emailFormat(email) {
+        let emailFormat = "/\S+@\S+\.\S+/";
+        return emailFormat.test(email)
+    }
+
+    passwordFormat(password) {
+        if (password.lenght >= 8 && password.lenght <= 16){
+            var low = password.toLowerCase()
+            var up = password.toUpperCase()
+            if (password !== low && password !== up) {
+                var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/
+                if (format.test(password))
+                    return true
+            }
+        }
+        return false
+    }
+
     signUp(request, response, reqFile) {
         let imagen = null;
         if (reqFile) {
@@ -77,23 +95,41 @@ class UserService {
                         response.end();
                     }
                     else {
-                        let emailFormat = "/\S+@\S+\.\S+/";
-                        if (emailFormat.test(request.body.email)) {
-                            this.userDAO.getUser(request.body.email, (err, result) => {
-                                let user = {
-                                    Id: result.Id,
-                                    email: result.email,
-                                    nombre: result.nombre,
-                                    contraseña: result.contraseña,
-                                    //let bitmap = fs.readFileSync(result.imagen);
-                                    //image : Buffer.from(result.Imagen).toString('base64'),
-                                    perfil: result.perfil,
-                                    nEmpleado: result.nEmpleado,
-                                    activo: result.activo
-                                }
-                                request.session.usuario = user;
-                                response.redirect("avisosEntrantes");
-                            });
+                        if (this.emailFormat(request.body.email)) { // CHECK CORREO
+                            if (request.body.name.lenght > 0) { // // CHECK NOMBRE
+                                if (request.body.password === request.body.password2){
+                                    if (passwordFormat(request.body.password)){  // 8-16 caracteres, minuscula, mayuscula, numero y signo random
+                                        this.userDAO.getUser(request.body.email, (err, result) => {
+                                            let user = {
+                                                Id: result.Id,
+                                                email: result.email,
+                                                nombre: result.nombre,
+                                                contraseña: result.contraseña,
+                                                //let bitmap = fs.readFileSync(result.imagen);
+                                                //image : Buffer.from(result.Imagen).toString('base64'),
+                                                perfil: result.perfil,
+                                                nEmpleado: result.nEmpleado,
+                                                activo: result.activo
+                                            }
+                                            request.session.usuario = user;
+                                            response.redirect("avisosEntrantes");
+                                        });
+                                    } else {
+                                        console.log("La contraseña tiene que cumplir el formato especificado");
+                                        // response.render("signUp", { errores: errors.mapped() });
+                                    } 
+                                } else {
+                                    console.log("Las contraseñas no coinciden");
+                                    // response.render("signUp", { errores: errors.mapped() });
+                                } 
+                                
+                            } else {
+                                console.log("Rellene el campo Nombre");
+                                // response.render("signUp", { errores: errors.mapped() });
+                            }                            
+                        } else { 
+                            console.log("El formato del correo no es correcto");
+                            // response.render("signUp", { errores: errors.mapped() });
                         }
                     }
                 });
