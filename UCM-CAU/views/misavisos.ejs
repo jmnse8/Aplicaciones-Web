@@ -13,8 +13,8 @@
       <table class="table">
           <thead>
             <tr>
-              <th scope="col">Fecha</th>
               <th scope="col">Tipo</th>
+              <th scope="col">Fecha</th>
               <th scope="col">Texto</th>
               <th scope="col">Técnico</th>
             </tr>
@@ -22,22 +22,22 @@
           <tbody class="table-group-divider">
             <% avisos.forEach( avi => { %>
               <tr class="filaTabla" data-bs-toggle="modal" data-bs-target="#verMiavisoModal<%=avi.Id%>">
-                <td><%=avi.fecha%></td>
-
+                
                 <% if(avi.categoria === 'sugerencia') {%>
                   <td><i class="fa-solid fa-lightbulb color-amarillo"></i></td>
                 <% } else if(avi.categoria === 'incidencia') {%> 
                   <td><i class="fa-solid fa-circle-exclamation color-rojo"></i></td>
                 <% } else { %>
                   <td><i class="fa-solid fa-heart color-verde"></i></td>
-                <% } %> 
+                <% } %>
+
+                <td><%=avi.fecha%></td>
                  
                 <td><%=avi.observaciones%></td>
                 <td><%=avi.Id%></td><!-- cambiar -->
               </tr>
               <%- include("verAvisoModal", {usuario: usuario,avi: avi}) %>
             <% }); %> 
-            
             
           </tbody>
         </table>

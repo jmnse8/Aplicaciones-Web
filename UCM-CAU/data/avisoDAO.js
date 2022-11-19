@@ -48,6 +48,44 @@ class AvisoDAO {
         });
     }
 
+    getAvisosEntrantes(callback) {
+        //console.log(userId);
+        this.pool.getConnection((err, connection) => {
+            if (err) {
+                callback(new Error("Error en la conexión a la base de datos"));
+            }
+            else {
+                const sql = "SELECT * FROM ucm_aw_cau_avi_avisos WHERE activo = true";
+                connection.query(sql,
+                    function (err, row) {
+                        connection.release();
+                        if (err) {
+                            callback(new Error("Error al acceso a la base de datos"));
+                            console.log(err.stack);
+                        }
+                        else {
+                            if (row.length === 0) {
+                                callback(null, false);
+                            }
+                            else {
+                                let avisos = [];
+                                //console.log('DAO-------');
+                                row.forEach(element => {
+                                    let json = JSON.parse(JSON.stringify(element));
+                                    //console.log(json.id);
+                                    avisos.push(json);
+                                });
+                                
+                                //console.log(row);
+                                //console.log(avisos);
+                                callback(null, avisos);
+                            }
+                        }
+                    })
+            }
+        });
+    }
+
     newAviso(userId, tema,  observaciones, categoria, fecha, callback) {
         this.pool.getConnection((err, connection) => {
             if (err) {
@@ -106,6 +144,43 @@ class AvisoDAO {
             }
         });
     };
+
+    getHistorico(identificacion, tecnico, callback) {
+
+        this.pool.getConnection((err, connection) => {
+            if (err) {
+                callback(new Error("Error en la conexión a la base de datos"));
+            }
+            else {
+                let sql;
+                if(tecnico)
+                    sql = "SELECT * FROM ucm_aw_cau_avi_avisos WHERE nEmpleado = ? and activo = false";
+                else
+                    sql = "SELECT * FROM ucm_aw_cau_avi_avisos WHERE usu_id = ? and activo = false";
+                connection.query(sql, [identificacion],
+                    function (err, row) {
+                        connection.release();
+                        if (err) {
+                            callback(new Error("Error al acceso a la base de datos"));
+                            console.log(err.stack);
+                        }
+                        else {
+                            if (row.length === 0) {
+                                callback(null, false);
+                            }
+                            else {
+                                let avisos = [];
+                                row.forEach(element => {
+                                    let json = JSON.parse(JSON.stringify(element));
+                                    avisos.push(json);
+                                });
+                                callback(null, avisos);
+                            }
+                        }
+                    })
+            }
+        });
+    }
 
 }
 

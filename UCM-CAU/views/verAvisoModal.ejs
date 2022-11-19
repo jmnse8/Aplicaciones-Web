@@ -52,6 +52,21 @@
                         <%= avi.comentarios %>
                     </p>
                 </div>
+                <% if (typeof tecnicos !== 'undefined') { %>
+                    <div class="row">
+                        <div class="col-4">
+                            <h5>Técnico asignado</h5>
+                        </div>
+                        <div class="col-8">
+                            <select name="" id="">
+                                <% tecnicos.forEach( t => { %>
+                                    <option value="<%= t.id %>"><%= t.nombre %></option>
+                                <% }); %>
+                            </select>
+                        </div>
+                    </div>
+                <% } %>
+                
 
             </div>
             <div class="modal-footer">
