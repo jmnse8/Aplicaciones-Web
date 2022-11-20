@@ -104,22 +104,28 @@ class UserService {
                         check("request.body.password", "Rellene el campo Contraseña").notEmpty(),
                         check("request.body.password", "No coinciden las contraseñas").samePassword(request.body.password2),
                         check("request.body.password", "La contraseña no cumple formato especificado").passwordFormat(),
-                        
-                        this.userDAO.getUser(request.body.email, (err, result) => {
-                            let user = {
-                                Id: result.Id,
-                                email: result.email,
-                                nombre: result.nombre,
-                                contraseña: result.contraseña,
-                                //let bitmap = fs.readFileSync(result.imagen);
-                                //image : Buffer.from(result.Imagen).toString('base64'),
-                                perfil: result.perfil,
-                                nEmpleado: result.nEmpleado,
-                                activo: result.activo
+                        (request, response) => {
+                            const errors = validationResult(request);
+                            if (errors.isEmpty()) {
+                                this.userDAO.getUser(request.body.email, (err, result) => {
+                                    let user = {
+                                        Id: result.Id,
+                                        email: result.email,
+                                        nombre: result.nombre,
+                                        contraseña: result.contraseña,
+                                        //let bitmap = fs.readFileSync(result.imagen);
+                                        //image : Buffer.from(result.Imagen).toString('base64'),
+                                        perfil: result.perfil,
+                                        nEmpleado: result.nEmpleado,
+                                        activo: result.activo
+                                    }
+                                    request.session.usuario = user;
+                                    response.redirect("login.ejs");
+                                });
+                            } else {
+                                response.redirect("signUp.ejs");
                             }
-                            request.session.usuario = user;
-                            response.redirect("avisosEntrantes");
-                        });
+                        }    
                     } 
                 });
         }
