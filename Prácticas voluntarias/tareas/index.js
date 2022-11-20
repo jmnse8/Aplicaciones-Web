@@ -74,6 +74,23 @@ app.get("/finish/:taskId", function(request, response){
     
 });
 
+app.get("deleteCompleted/:email", function(request, response){
+    let email = Number(request.params.email);
+    daoT.deleteCompleted(email, (err, res) => {
+        if(err){
+            console.log(err.message);
+            response.end();
+        }
+        else if(!res){
+            console.log("Error al eliminar las tareas finalizadas");
+            response.redirect('/');
+        }
+        else{
+            response.redirect('/');
+        }        
+    })    
+});
+
 app.post("/addTask", function(request, response){
 
     let task = utils.createTask(request.body.text);
