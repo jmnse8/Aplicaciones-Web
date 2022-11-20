@@ -82,20 +82,43 @@ class DAOTasks {
             }
         });    
     }
-    
+   
     deleteCompleted(email, callback) {  
         this.pool.getConnection(function (err, connection) {
             if (err) {
                 callback(new Error("Error de conexión a la base de datos"));
             } else {
-                connection.query("DELETE FROM aw_tareas_tareas t JOIN aw_tareas_user_tarea tu ON t.IdTarea = tu.IdTarea JOIN aw_tareas_usuarios u ON tu.IdUser = u.IdUser WHERE u.email=?",
-                    [email],
+                connection.query("DELETE aw_tareas_etiquetas FROM aw_tareas_etiquetas WHERE IdEtiqueta IN (SELECT IdEtiqueta FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN (SELECT IdTask FROM aw_tareas_user_tarea WHERE IdTask IN (SELECT IdTask FROM aw_tareas_user u JOIN aw_tareas_user_tarea tu ON u.IdUser = tu.IdUser WHERE u.email = ?) GROUP BY IdTask HAVING COUNT IdUser <= 1))", [email],
+                    function (err, result) {
+                        connection.release(); 
+                        if (err)
+                            callback(new Error("Error borrando etiquetas"));
+                    }
+                );
+                connection.query("DELETE aw_tareas_tareas_etiquetas FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN (SELECT IdTask FROM aw_tareas_user_tarea WHERE IdTask IN (SELECT IdTask FROM aw_tareas_user u JOIN aw_tareas_user_tarea tu ON u.IdUser = tu.IdUser WHERE u.email = ?) GROUP BY IdTask HAVING COUNT IdUser <= 1)", [email],
                     function (err, result) {
                         connection.release(); 
                         if (err) {
-                            callback(new Error("Error de acceso a la base de datos"));
+                            callback(new Error("Error borrando tareas-etiquetas"));
                         }
-                    });
+                    }
+                );
+                connection.query("DELETE aw_tareas_tareas FROM aw_tareas_tareas WHERE IdTarea IN (SELECT IdTask FROM aw_tareas_user_tarea WHERE IdTask IN (SELECT IdTask FROM aw_tareas_user u JOIN aw_tareas_user_tarea tu ON u.IdUser = tu.IdUser WHERE u.email = ?) GROUP BY IdTask HAVING COUNT IdUser <= 1)", [email],
+                    function (err, result) {
+                        connection.release(); 
+                        if (err) {
+                            callback(new Error("Error borrando tareas"));
+                        }
+                    }
+                );
+                connection.query("DELETE aw_tareas_user_tarea FROM aw_tareas_user_tarea WHERE IdUser IN (SELECT IdUser FROM aw_tareas_usuarios WHERE email = ?)", [email],
+                    function (err, result) {
+                        connection.release(); 
+                        if (err) {
+                            callback(new Error("Error borrando usuarios-tareas"));
+                        }
+                    }
+                );
             }
         }); 
     }
