@@ -74,9 +74,8 @@ app.get("/finish/:taskId", function(request, response){
     
 });
 
-app.get("deleteCompleted/:email", function(request, response){
-    let email = Number(request.params.email);
-    daoT.deleteCompleted(email, (err, res) => {
+app.get("deleteCompleted/", function(request, response) {
+    daoT.deleteCompleted((err, res) => {
         if(err){
             console.log(err.message);
             response.end();
