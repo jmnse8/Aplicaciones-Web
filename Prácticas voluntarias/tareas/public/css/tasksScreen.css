@@ -84,6 +84,7 @@ nav {
 .etiqueta {
   font-size: 1rem;
   padding: .4em;
+  margin: .15em;
   border-radius: 5px;
   box-shadow:  0 8px 30px rgba(0,0,0,.12);
   background: linear-gradient(-45deg, #23a6d5, #23d5ab);
@@ -95,4 +96,9 @@ nav {
 
 p {
   margin: auto !important;
+}
+
+.modal-content {
+  background-color: #ffffffa8 !important;
+  backdrop-filter: blur(3px) !important;
 }

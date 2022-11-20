@@ -6,36 +6,40 @@
     <%- include("navbar", {usuario: usuario, panel: panel}) %>
     
     <div class="container container-tabla">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Tipo</th>
-            <th scope="col">Fecha</th>
-            <th scope="col">Texto</th>
-          </tr>
-        </thead>
-        <tbody class="table-group-divider">
-          <% avisos.forEach( avi => { %>
-            <tr class="filaTabla" data-bs-toggle="modal" data-bs-target="#verMiavisoModal<%=avi.Id%>">
-              
-              <% if(avi.categoria === 'sugerencia') {%>
-                <td><i class="fa-solid fa-lightbulb color-amarillo"></i></td>
-              <% } else if(avi.categoria === 'incidencia') {%> 
-                <td><i class="fa-solid fa-circle-exclamation color-rojo"></i></td>
-              <% } else { %>
-                <td><i class="fa-solid fa-heart color-verde"></i></td>
-              <% } %>
-
-              <td><%=avi.fecha%></td>
-               
-              <td><%=avi.observaciones%></td>
-
+      <% if (!avisos) { %>
+        <h5 class="text-center">No tiene ningún aviso</h5>
+      <% } else { %>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Tipo</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Texto</th>
             </tr>
-            <%- include("verAvisoModal", {usuario: usuario,avi: avi}) %>
-          <% }); %> 
-          
-        </tbody>
-      </table>
+          </thead>
+          <tbody class="table-group-divider">
+            <% avisos.forEach( avi => { %>
+              <tr class="filaTabla" data-bs-toggle="modal" data-bs-target="#verMiavisoModal<%=avi.Id%>">
+                
+                <% if(avi.categoria === 'sugerencia') {%>
+                  <td><i class="fa-solid fa-lightbulb color-amarillo"></i></td>
+                <% } else if(avi.categoria === 'incidencia') {%> 
+                  <td><i class="fa-solid fa-circle-exclamation color-rojo"></i></td>
+                <% } else { %>
+                  <td><i class="fa-solid fa-heart color-verde"></i></td>
+                <% } %>
+  
+                <td><%=avi.fecha%></td>
+                 
+                <td><%=avi.observaciones%></td>
+  
+              </tr>
+              <%- include("verAvisoModal", {usuario: usuario,avi: avi}) %>
+            <% }); %> 
+            
+          </tbody>
+        </table>
+      <% } %>
     </div>
 </body>
 </html>

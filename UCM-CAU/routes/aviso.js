@@ -43,7 +43,6 @@ app.get("/historico", function (request, response) {
     let usuario = request.session.usuario;
     if (usuario)
         avisoService.getHistorico(usuario, (avisos) => {
-            //console.log(avisos);
             response.render("historico.ejs", { usuario, panel, avisos });
         });
     else

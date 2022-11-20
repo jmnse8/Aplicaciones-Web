@@ -29,3 +29,8 @@ function createTask(texto) {
     }
     return {text: titulo,tags: etiquetas};
 }
+
+module.exports = {
+
+    createTask : createTask
+};
