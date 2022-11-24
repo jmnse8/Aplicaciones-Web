@@ -59,9 +59,7 @@ class DAOTasks {
                 });
             });
         });
-
     }
-
 
     markTaskDone(idTask, callback) {
         this.pool.getConnection(function (err, connection) {
@@ -82,48 +80,101 @@ class DAOTasks {
             }
         });    
     }
-   
-    deleteCompleted(email, callback) {  
+
+    deleteEtiquetas(tareas) {
         this.pool.getConnection(function (err, connection) {
             if (err) {
                 callback(new Error("Error de conexión a la base de datos"));
             } else {
-                connection.query("DELETE aw_tareas_etiquetas FROM aw_tareas_etiquetas WHERE IdEtiqueta IN (SELECT IdEtiqueta FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN (SELECT IdTask FROM aw_tareas_user_tarea WHERE IdTask IN (SELECT IdTask FROM aw_tareas_user u JOIN aw_tareas_user_tarea tu ON u.IdUser = tu.IdUser WHERE u.email = ?) GROUP BY IdTask HAVING COUNT IdUser <= 1))", [email],
-                    function (err, result) {
-                        connection.release(); 
-                        if (err)
-                            callback(new Error("Error borrando etiquetas"));
-                    }
-                );
-                connection.query("DELETE aw_tareas_tareas_etiquetas FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN (SELECT IdTask FROM aw_tareas_user_tarea WHERE IdTask IN (SELECT IdTask FROM aw_tareas_user u JOIN aw_tareas_user_tarea tu ON u.IdUser = tu.IdUser WHERE u.email = ?) GROUP BY IdTask HAVING COUNT IdUser <= 1)", [email],
-                    function (err, result) {
-                        connection.release(); 
-                        if (err) {
-                            callback(new Error("Error borrando tareas-etiquetas"));
-                        }
-                    }
-                );
-                connection.query("DELETE aw_tareas_tareas FROM aw_tareas_tareas WHERE IdTarea IN (SELECT IdTask FROM aw_tareas_user_tarea WHERE IdTask IN (SELECT IdTask FROM aw_tareas_user u JOIN aw_tareas_user_tarea tu ON u.IdUser = tu.IdUser WHERE u.email = ?) GROUP BY IdTask HAVING COUNT IdUser <= 1)", [email],
-                    function (err, result) {
-                        connection.release(); 
-                        if (err) {
-                            callback(new Error("Error borrando tareas"));
-                        }
-                    }
-                );
-                connection.query("DELETE aw_tareas_user_tarea FROM aw_tareas_user_tarea WHERE IdUser IN (SELECT IdUser FROM aw_tareas_usuarios WHERE email = ?)", [email],
-                    function (err, result) {
-                        connection.release(); 
-                        if (err) {
-                            callback(new Error("Error borrando usuarios-tareas"));
-                        }
-                    }
-                );
-            }
-        }); 
+                connection.query("DELETE aw_tareas_etiquetas FROM aw_tareas_etiquetas WHERE IdEtiqueta IN (SELECT IdEtiqueta FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN (SELECT IdTask FROM aw_tareas_user_tarea WHERE IdTask IN ? GROUP BY IdTask HAVING COUNT IdUser <= 1))",
+                [tareas],
+                function (err, result) {
+                connection.release(); 
+                if (err)
+                    callback(new Error("Error borrando etiquetas"));
+                });
+            }  
+        });      
     }
 
+    deleteTareasEtiquetas(tareas) {
+        this.pool.getConnection(function (err, connection) {
+            if (err) {
+                callback(new Error("Error de conexión a la base de datos"));
+            } else {
+                connection.query("DELETE aw_tareas_tareas_etiquetas FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN (SELECT IdTask FROM aw_tareas_user_tarea WHERE IdTask IN ? GROUP BY IdTask HAVING COUNT IdUser <= 1)",
+                [tareas],
+                function (err, result) {
+                connection.release(); 
+                if (err)
+                    callback(new Error("Error borrando tareas-etiquetas"));
+                });
+            }
+        });    
+    }
 
+    deleteTareas(tareas) {
+        this.pool.getConnection(function (err, connection) {
+            if (err) {
+                callback(new Error("Error de conexión a la base de datos"));
+            } else {
+                connection.query("DELETE aw_tareas_tareas FROM aw_tareas_tareas WHERE IdTarea IN (SELECT IdTask FROM aw_tareas_user_tarea WHERE IdTask IN (SELECT IdTask FROM aw_tareas_user u JOIN aw_tareas_user_tarea tu ON u.IdUser = tu.IdUser WHERE u.email = ?) GROUP BY IdTask HAVING COUNT IdUser <= 1)",
+                [tareas],
+                function (err, result) {
+                connection.release(); 
+                if (err)
+                    callback(new Error("Error borrando tareas"));
+                });
+            }
+        });        
+    }
+
+    deleteUsuariosTareas(email){
+        getIdUser(email, pool, (idUser) => {
+            this.pool.getConnection(function (err, connection) {
+                if (err) {
+                    callback(new Error("Error de conexión a la base de datos"));
+                } else {
+                    connection.query("DELETE aw_tareas_user_tarea FROM aw_tareas_user_tarea tu JOIN aw_tareas_tareas t ON tu.IdTarea = t.IdTarea WHERE tu.IdUser = idUser and t.HECHO = 1",
+                    [idUser],
+                    function (err, result) {
+                    connection.release(); 
+                    if (err)
+                        callback(new Error("Error borrando usuarios-tareas"));
+                    });
+                }
+            }); 
+        });
+    }
+
+    getTareasUsuario(email) {
+        getIdUser(email, pool, (idUser) => {
+            this.pool.getConnection(function (err, connection) {
+                if (err) {
+                    callback(new Error("Error de conexión a la base de datos"));
+                } else {
+                    connection.query("DELETE aw_tareas_user_tarea FROM aw_tareas_user_tarea tu JOIN aw_tareas_tareas t ON tu.IdTarea = t.IdTarea WHERE tu.IdUser = idUser and t.HECHO = 1",
+                    [idUser],
+                    function (err, result) {
+                    connection.release(); 
+                    if (err)
+                        callback(new Error("Error borrando usuarios-tareas"));
+                    else {
+                        return result
+                    }
+                    });                    
+                }
+            });
+        });
+    }
+   
+    deleteCompleted (email, callback) {
+        let tareas = getTareasUsuario(email)  
+        deleteEtiquetas(tareas)
+        deleteTareasEtiquetas(tareas)
+        deleteTareas(tareas)
+        deleteUsuariosTareas(email)
+    }
 }
 
 //------------------- FUNCIONES AUXILIARES PARA INSERTAR TAREAS -------------------
