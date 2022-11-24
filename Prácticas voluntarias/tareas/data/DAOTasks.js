@@ -86,7 +86,7 @@ class DAOTasks {
             if (err) {
                 callback(new Error("Error de conexión a la base de datos"));
             } else {
-                connection.query("DELETE aw_tareas_etiquetas FROM aw_tareas_etiquetas WHERE IdEtiqueta IN (SELECT IdEtiqueta FROM aw_tareas_tareas_etiquetas ?",
+                connection.query("DELETE aw_tareas_etiquetas FROM aw_tareas_etiquetas WHERE IdEtiqueta IN (SELECT IdEtiqueta FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN ?",
                 [tareas],
                 function (err, result) {
                 connection.release(); 
@@ -135,7 +135,7 @@ class DAOTasks {
                 if (err) {
                     callback(new Error("Error de conexión a la base de datos"));
                 } else {
-                    connection.query("DELETE aw_tareas_user_tarea FROM aw_tareas_user_tarea WHERE IdUser = idUser",
+                    connection.query("DELETE aw_tareas_user_tarea FROM aw_tareas_user_tarea WHERE IdUser = ?",
                     [idUser],
                     function (err, result) {
                     connection.release(); 
@@ -153,7 +153,7 @@ class DAOTasks {
                 if (err) {
                     callback(new Error("Error de conexión a la base de datos"));
                 } else {
-                    connection.query("SELECT IdTask FROM aw_tareas_user_tarea WHERE IdUser = idUser GROUP BY IdTask HAVING COUNT IdUser <= 1",
+                    connection.query("SELECT IdTarea FROM aw_tareas_user_tarea WHERE IdTarea IN (SELECT IdTarea FROM aw_tareas_user_tarea WHERE IdUser = ?) GROUP BY IdTarea HAVING COUNT(*)<=1;",
                     [idUser],
                     function (err, result) {
                     connection.release(); 
