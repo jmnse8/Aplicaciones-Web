@@ -3,9 +3,6 @@ const fs = require('fs');
 const { check, validationResult } = require("express-validator");
 const UserDAO = require("../data/userDAO");
 
-
-
-
 class UserService {
     constructor() {
         this.userDAO = new UserDAO();
@@ -56,28 +53,6 @@ class UserService {
         }
     };
 
-    emailFormat() {
-        let emailFormat = "/\S+@\S+\.\S+/";
-        return emailFormat.test(this)
-    }
-
-    passwordFormat() {
-        if (this.lenght >= 8 && this.lenght <= 16){
-            var low = this.toLowerCase()
-            var up = this.toUpperCase()
-            if (this !== low && this !== up) {
-                var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/
-                if (format.test(this))
-                    return true
-            }
-        }
-        return false
-    }
-
-    samePassword(password) {
-        return this == password
-    }
-
     signUp(request, response, reqFile) {
         let imagen = null;
         if (reqFile) {
@@ -86,7 +61,6 @@ class UserService {
         else {
             imagen = fs.readFileSync("./public/images/logoUCM.jpg");
         }
-
         const errors = validationResult(request);
 
         if (errors.isEmpty()) {
@@ -99,11 +73,6 @@ class UserService {
                         response.end();
                     }
                     else {
-                        check("request.body.name", "Rellene el campo Nombre").notEmpty(),
-                        check("request.body.email", "El formato del correo no es correcto").emailFormat(),
-                        check("request.body.password", "Rellene el campo Contraseña").notEmpty(),
-                        check("request.body.password", "No coinciden las contraseñas").samePassword(request.body.password2),
-                        check("request.body.password", "La contraseña no cumple formato especificado").passwordFormat(),
                         (request, response) => {
                             const errors = validationResult(request);
                             if (errors.isEmpty()) {
@@ -120,7 +89,7 @@ class UserService {
                                         activo: result.activo
                                     }
                                     request.session.usuario = user;
-                                    response.redirect("login.ejs");
+                                    response.redirect("login.ejs"); 
                                 });
                             } else {
                                 response.redirect("signUp.ejs");
@@ -151,7 +120,6 @@ class UserService {
             });
         }
     };
-
 
     getAllUsers(callback) {
         this.userDAO.getAllUsers((err, result) => {

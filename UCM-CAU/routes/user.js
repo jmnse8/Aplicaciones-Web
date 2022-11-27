@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const { check, validationResult } = require("express-validator");
 const UserService = require("../services/userService");
-
+const utils = require("../resources/utils")
 const multer = require("multer");
 const multerFactory = multer({ storage: multer.memoryStorage() });
 
@@ -26,24 +26,27 @@ app.get("/login", function (request, response) {
         response.render("login.ejs", { errores: {} });
 });
 
-app.get("/signup", function (request, response) {
-    let usuario = request.session.usuario;
-    if (usuario)
-        response.redirect("avisosentrantes");
-    else
-        response.render("signup.ejs", { errores: {} });
-});
-
 app.post("/login",
     check("email", "campo correo vacio").notEmpty(),
     (request, response, next) => userService.login(request, response, next)
 );
 
+app.get("/signup", function (request, response) {
+    let usuario = request.session.usuario;
+    if (usuario)
+        response.redirect("login.ejs");
+    else
+        response.render("signup.ejs", { errores: {} });
+});
+
 app.post("/signup",
     multerFactory.single('image'),
-    check("email", "campo correo vacio").notEmpty(),
+    check("name", "Rellene el campo Nombre").notEmpty(),
+    check("email", "El formato del correo no es correcto").utils.emailFormat(),
+    check("password", "Rellene el campo Contraseña").utils.notEmpty(),
+    check("password", "No coinciden las contraseñas").utils.samePassword("password2"),
+    check("password", "La contraseña no cumple con el formato especificado").utils.passwordFormat(),
     (request, response) => {
-        //console.log(request.file);
         userService.signup(request, response, request.file);
     }
 );
