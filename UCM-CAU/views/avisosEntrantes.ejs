@@ -12,7 +12,7 @@
             <th scope="col">Tipo</th>
             <th scope="col">Fecha</th>
             <th scope="col">Texto</th>
-            <th scope="col"></th>
+            <th scope="col">Técnico</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -33,19 +33,21 @@
               <td><%=avi.observaciones.slice(0, 200)%></td>
 
               <% if (avi.nEmpleado == null) { %>
-                <td><i class="fa-solid fa-user-tie"></i></td>
+                <td class="text-center"><i class="fa-solid fa-user-tie color-rojo"></i></td>
               <% } else { %>
-                <td><i class="fa-solid fa-user-tie apagado"></i></td>
+                <td class="text-center"><i class="fa-solid fa-user-tie color-verde"></i></td>
               <% } %>
 
-              <td><i class="fa-solid fa-trash basura" data-bs-toggle="modal" data-bs-target="#borrarModal"></i></td>
+              <td><i class="fa-solid fa-trash basura" data-bs-toggle="modal" data-bs-target="#borrarModal<%=avi.Id%>"></i></td>
             </tr>
-            <%- include("verAvisoModal", {usuario: usuario,avi: avi, tecnicos: tecnicos}) %>
+            <%- include("verAvisoModal", {usuario: usuario, avi: avi, tecnicos: tecnicos}) %>
+            <%- include("borrarModal", {aviso: avi, usuario: null}) %>
           <% }); %> 
           
         </tbody>
       </table>
 
     </div>
+    
 </body>
 </html>

@@ -74,7 +74,7 @@ app.get("/finish/:taskId", function(request, response){
     
 });
 
-app.get("deleteCompleted/", function(request, response) {
+app.get("/deleteCompleted", function(request, response) {
     daoT.deleteCompleted((err, res) => {
         if(err){
             console.log(err.message);
@@ -95,7 +95,7 @@ app.post("/addTask", function(request, response){
     let task = utils.createTask(request.body.text);
 
     console.log(task);
-    /* daoT.insertTask("bill.puertas@ucm.es", task, (err, result) => {
+    daoT.insertTask("bill.puertas@ucm.es", task, (err, result) => {
         if (err) {
             console.log(err.message);
             response.end();
@@ -107,7 +107,7 @@ app.post("/addTask", function(request, response){
         else {
             response.redirect('/');
         }
-    }); */
+    });
     
 });
 

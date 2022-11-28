@@ -24,14 +24,12 @@
               <% } else { %>
                 <td onclick="window.location='/profile/<%=usu.Id%>'">Usuario</td>
               <% } %> 
-              <td><i class="fa-solid fa-trash basura" data-bs-toggle="modal" data-bs-target="#borrarModal"></i></td>
+              <td><i class="fa-solid fa-trash basura" data-bs-toggle="modal" data-bs-target="#borrarModal<%=usu.Id%>"></i></td>
             </tr>
+            <%- include("borrarModal", {aviso: null, usuario: usu}) %>
           <% }); %>
-          
-          
         </tbody>
       </table>
     </div>
-    <%- include("borrarModal") %>
 </body>
 </html>

@@ -90,5 +90,11 @@ app.get("/profile/:id", function (request, response) {
     }
 });
 
+app.post("/borrarUsuario/:idUsu", (request, response) => {
+    let idUsu = Number(request.params.idUsu);
+    userService.deleteUser(idUsu, () => response.redirect("/gestionUsuarios"));
+    //console.log(idAvi);
+});
+
 
 module.exports = app;

@@ -182,6 +182,35 @@ class AvisoDAO {
         });
     }
 
+
+    deleteAviso(idAvi, callback) {
+        //console.log(userId);
+        this.pool.getConnection((err, connection) => {
+            if (err) {
+                callback(new Error("Error en la conexión a la base de datos"));
+            }
+            else {
+                const sql = "DELETE FROM ucm_aw_cau_avi_avisos WHERE Id = ?";
+                connection.query(sql, idAvi ,
+                    function (err, row) {
+                        connection.release();
+                        if (err) {
+                            callback(new Error("Error al acceso a la base de datos"));
+                            console.log(err.stack);
+                        }
+                        else {
+                            if (row.length === 0) {
+                                callback(null, false);
+                            }
+                            else {
+                                callback(null, row);
+                            }
+                        }
+                    })
+            }
+        });
+    }
+
 }
 
 module.exports = AvisoDAO;
