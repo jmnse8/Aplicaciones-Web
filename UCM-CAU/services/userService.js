@@ -171,6 +171,24 @@ class UserService {
         });
 
     };
+
+    deleteUser(idUsu, callback) {
+        this.userDAO.deleteUser(idUsu, (err, result) => {
+            if (err) {
+                console.log(err.message);
+                //response.end();
+                callback(false);
+            }
+            else if (!result) {
+                console.log("No existe el usurio");
+                callback(false);
+                //response.render("login", {errores: false});
+            }
+            else {
+                callback(result);
+            }
+        });
+    };
 };
 
 

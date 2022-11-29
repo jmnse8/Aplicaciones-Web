@@ -84,5 +84,11 @@ app.post("/search", (request, response) => {
     }
 });
 
+app.post("/borrarAviso/:idAviso", (request, response) => {
+    let idAvi = Number(request.params.idAviso);
+    avisoService.deleteAviso(idAvi, () => response.redirect("/avisosentrantes"));
+    //console.log(idAvi);
+});
+
 
 module.exports = app;

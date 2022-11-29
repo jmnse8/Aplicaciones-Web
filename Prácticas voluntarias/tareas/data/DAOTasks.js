@@ -52,7 +52,7 @@ class DAOTasks {
     insertTask(email, task, callback) {
         getIdUser(email, this.pool, (idUser) => {
             insertTask(task.text, this.pool, (idTarea) => {
-                joinUserTask(idUser, idTarea, task.done, this.pool, (bien) => {
+                joinUserTask(idUser, idTarea, false, this.pool, (bien) => {
                     insertTags(task.tags, this.pool, (idTags) => {
                         idTags.forEach(t => joinTaskTag(idTarea, t,this.pool, (bien2) => {}));
                     });
