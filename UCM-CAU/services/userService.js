@@ -61,9 +61,10 @@ class UserService {
         else {
             imagen = fs.readFileSync("./public/images/logoUCM.jpg");
         }
+        let passwordsEquals = (request.body.password === request.body.password2);
         const errors = validationResult(request);
 
-        if (errors.isEmpty()) {
+        if (errors.isEmpty() && passwordsEquals) {
             this.userDAO.newUser(
                 request.body.name, request.body.email, request.body.password,
                 imagen, request.body.perfil, request.body.nEmpleado,

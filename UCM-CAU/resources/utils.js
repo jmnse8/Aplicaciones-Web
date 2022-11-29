@@ -1,21 +1,21 @@
-export function emailFormat() {
-    let emailFormat = "/\S+@\S+\.\S+/";
-    return emailFormat.test(this)
-}
-
-export function passwordFormat() {
-    if (this.lenght >= 8 && this.lenght <= 16){
-        var low = this.toLowerCase()
-        var up = this.toUpperCase()
-        if (this !== low && this !== up) {
+function passwordFormat(param) {
+    if (param.length >= 8 && param.length <= 16) {
+        var low = param.toLowerCase()
+        var up = param.toUpperCase()
+        if (param !== low && param !== up) {
             var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/
-            if (format.test(this))
+            if (format.test(param))
                 return true
         }
     }
     return false
 }
 
-export function samePassword(password) {
-    return this == password
+function samePassword(password1, password2) {
+    return password1 === password2
+}
+
+module.exports = {
+    passwordFormat : passwordFormat,
+    samePassword : samePassword
 }

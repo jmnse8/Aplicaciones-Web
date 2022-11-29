@@ -41,11 +41,12 @@ app.get("/signup", function (request, response) {
 
 app.post("/signup",
     multerFactory.single('image'),
+    /*
     check("name", "Rellene el campo Nombre").notEmpty(),
-    check("email", "El formato del correo no es correcto").utils.emailFormat(),
-    check("password", "Rellene el campo Contraseña").utils.notEmpty(),
-    check("password", "No coinciden las contraseñas").utils.samePassword("password2"),
-    check("password", "La contraseña no cumple con el formato especificado").utils.passwordFormat(),
+    check("email", "El formato del correo no es correcto").matches(/\S+@\S+\.\S+/),
+    check("password", "Rellene el campo Contraseña").notEmpty(),
+    check("password", "La contraseña no cumple con el formato especificado").custom(utils.passwordFormat()),
+    */
     (request, response) => {
         userService.signup(request, response, request.file);
     }

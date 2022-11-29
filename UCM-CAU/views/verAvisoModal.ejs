@@ -8,35 +8,21 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-auto"><h5>Fecha: </h5></div>
-                    <div class="col-auto"><p>
-                        <%= avi.fecha %>
-                    </p></div>
-                    
-                    
+                <hr style="height:5px; width:100%; color:rgb(0, 0, 0);">
+                <div class="d-flex justify-content-around">
+                    <div class="row"><h5 class="col-auto"> Perfil: </h5><p class="col-auto"><%= usuario.perfil %></p></div>                    
+                </div>
+                <hr style="height:5px; width:100%; color:rgb(0, 0, 0);">
+                <div class="d-flex justify-content-around">
+                    <div class="row"><h5 class="col-auto"> Fecha: </h5><p class="col-auto"><%= avi.fecha %></p></div>
+                    <div class="row"><h5 class="col-auto"> Comunicaciones: </h5><p class="col-auto"><%= avi.tema %></p></div>                  
+                </div>
+                <hr style="height:5px; width:100%; color:rgb(0, 0, 0);">
+                <div class="d-flex justify-content-around">
+                    <h5 class="col-auto">Observaciones</h5>
                 </div>
                 <div class="row">
-                    <div class="col-auto"><h5>Comunicaciones: </h5></div>
-                    <div class="col-auto"><p>
-                        <%= avi.tema %>
-                    </p></div>
-                    
-                    
-                </div>
-                <div class="row">
-                    <div class="col-auto"><h5>Pefil: </h5></div>
-                    <div class="col-auto"><p>
-                        <%= usuario.perfil %>
-                    </p></div>
-                    
-                    
-                </div>
-                <div class="row">
-                    <h5>Observaciones: </h5>
-                </div>
-                <div class="row">
-                    <div class="card">
+                    <div class="card border border-dark" style="width:90%; margin:auto;">
                         <div class="card-body">
                             <p>
                                 <%= avi.observaciones %>
@@ -44,21 +30,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <h5>Comentarios del técnico: </h5>
+                <hr style="height:5px; width:100%; color:rgb(0, 0, 0);">
+                <div class="text-center">
+                    <h5>Comentarios del técnico</h5>
                 </div>
+                <hr style="height:5px; width:100%; color:rgb(0, 0, 0);">
                 <div class="row">
                     <p>
                         <%= avi.comentarios %>
                     </p>
                 </div>
                 <% if (typeof tecnicos !== 'undefined') { %>
-                    <div class="row">
-                        <div class="col-4">
-                            <h5>Técnico asignado</h5>
-                        </div>
-                        <div class="col-8">
-                            <select name="" id="">
+                    <div class="d-flex justify-content-around">
+                        <div class="row">
+                            <h5 class="col-auto">Técnico asignado</h5>
+                            <select class="col-auto" name="" id="">
                                 <% tecnicos.forEach( t => { %>
                                     <option value="<%= t.id %>"><%= t.nombre %></option>
                                 <% }); %>
@@ -67,10 +53,9 @@
                     </div>
                 <% } %>
                 
-
+                <hr style="height:5px; width:100%; color:rgb(0, 0, 0);">    
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Understood</button>
             </div>
         </div>
