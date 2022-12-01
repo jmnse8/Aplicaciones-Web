@@ -81,105 +81,124 @@ class DAOTasks {
         });    
     }
 
-    deleteEtiquetas(tareas) {
-        this.pool.getConnection(function (err, connection) {
-            if (err) {
-                callback(new Error("Error de conexión a la base de datos"));
-            } else {
-                connection.query("DELETE aw_tareas_etiquetas FROM aw_tareas_etiquetas WHERE IdEtiqueta IN (SELECT IdEtiqueta FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN ?",
-                [tareas],
-                function (err, result) {
-                connection.release(); 
-                if (err)
-                    callback(new Error("Error borrando etiquetas"));
-                });
-            }  
-        });      
-    }
-
-    deleteTareasEtiquetas(tareas) {
-        this.pool.getConnection(function (err, connection) {
-            if (err) {
-                callback(new Error("Error de conexión a la base de datos"));
-            } else {
-                connection.query("DELETE aw_tareas_tareas_etiquetas FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN ?",
-                [tareas],
-                function (err, result) {
-                connection.release(); 
-                if (err)
-                    callback(new Error("Error borrando tareas-etiquetas"));
-                });
-            }
-        });    
-    }
-
-    deleteTareas(tareas) {
-        this.pool.getConnection(function (err, connection) {
-            if (err) {
-                callback(new Error("Error de conexión a la base de datos"));
-            } else {
-                connection.query("DELETE aw_tareas_tareas FROM aw_tareas_tareas WHERE IdTarea IN ?",
-                [tareas],
-                function (err, result) {
-                connection.release(); 
-                if (err)
-                    callback(new Error("Error borrando tareas"));
-                });
-            }
-        });        
-    }
-
-    deleteUsuariosTareas(email){
-        getIdUser(email, pool, (idUser) => {
-            this.pool.getConnection(function (err, connection) {
-                if (err) {
-                    callback(new Error("Error de conexión a la base de datos"));
-                } else {
-                    connection.query("DELETE aw_tareas_user_tarea FROM aw_tareas_user_tarea WHERE IdUser = ?",
-                    [idUser],
-                    function (err, result) {
-                    connection.release(); 
-                    if (err)
-                        callback(new Error("Error borrando usuarios-tareas"));
-                    });
-                }
-            }); 
-        });
-    }
-
-    getTareasUsuario(email) {
-        getIdUser(email, pool, (idUser) => {
-            this.pool.getConnection(function (err, connection) {
-                if (err) {
-                    callback(new Error("Error de conexión a la base de datos"));
-                } else {
-                    connection.query("SELECT IdTarea FROM aw_tareas_user_tarea WHERE IdTarea IN (SELECT IdTarea FROM aw_tareas_user_tarea WHERE IdUser = ?) GROUP BY IdTarea HAVING COUNT(*)<=1;",
-                    [idUser],
-                    function (err, result) {
-                    connection.release(); 
-                    if (err)
-                        callback(new Error("Error borrando usuarios-tareas"));
-                    else {
-                        console.log(result)
-                        return result
-                    }
-                    });                    
-                }
-            });
-        });
-    }
-   
     deleteCompleted (email, callback) {
-        let tareas = getTareasUsuario(email)  
-        deleteEtiquetas(tareas)
-        deleteTareasEtiquetas(tareas)
-        deleteTareas(tareas)
-        deleteUsuariosTareas(email)
+        getTareasUsuario(email, this.pool, (tareas) => {
+            deleteEtiquetas(tareas, this.pool, () => {
+                deleteTareasEtiquetas(tareas, this.pool, () => {
+                    deleteTareas(tareas, this.pool, () => {
+                        deleteUsuariosTareas(email, this.pool, () => {})
+                    })
+                })
+            })
+        })  
     }
 }
 
-//------------------- FUNCIONES AUXILIARES PARA INSERTAR TAREAS -------------------
+//------------------- FUNCIONES AUXILIARES PARA INSERTAR TAREAS -------------------//
 
+function deleteEtiquetas(tareas, pool, callback) {
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            callback(new Error("Error de conexión a la base de datos"));
+        } else {
+            connection.query("DELETE aw_tareas_etiquetas FROM aw_tareas_etiquetas WHERE IdEtiqueta IN (SELECT IdEtiqueta FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN ?",
+            [tareas],
+            function (err, result) {
+            connection.release(); 
+            if (err)
+                callback(new Error("Error borrando etiquetas"));
+            else {
+                callback();
+            }
+            });
+        }  
+    });      
+}
+
+function deleteTareasEtiquetas(tareas, pool, callback) {
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            callback(new Error("Error de conexión a la base de datos"));
+        } else {
+            connection.query("DELETE aw_tareas_tareas_etiquetas FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN ?",
+            [tareas],
+            function (err, result) {
+            connection.release(); 
+            if (err)
+                callback(new Error("Error borrando tareas-etiquetas"));
+            else {
+                callback();
+            }
+            });
+        }
+    });    
+}
+
+function deleteTareas(tareas, pool, callback) {
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            callback(new Error("Error de conexión a la base de datos"));
+        } else {
+            connection.query("DELETE aw_tareas_tareas FROM aw_tareas_tareas WHERE IdTarea IN ?",
+            [tareas],
+            function (err, result) {
+            connection.release(); 
+            if (err)
+                callback(new Error("Error borrando tareas"));
+            else {
+                callback();
+            }
+            });
+        }
+    });        
+}
+
+function deleteUsuariosTareas(email, pool, callback){
+    getIdUser(email, pool, (idUser) => {
+        pool.getConnection(function (err, connection) {
+            if (err) {
+                callback(new Error("Error de conexión a la base de datos"));
+            } else {
+                connection.query("DELETE aw_tareas_user_tarea FROM aw_tareas_user_tarea WHERE IdUser = ?",
+                [idUser],
+                function (err, result) {
+                connection.release(); 
+                if (err)
+                    callback(new Error("Error borrando usuarios-tareas"));
+                else {
+                    callback();
+                }
+                });
+            }
+        }); 
+    });
+}
+
+function getTareasUsuario(email, pool, callback) {
+    getIdUser(email, pool, (idUser) => {
+        console.log("ID USER: ") //
+        console.log(idUser) // 
+        pool.getConnection(function (err, connection) {
+            if (err) {
+                callback(new Error("Error de conexión a la base de datos"));
+            } else {
+                connection.query("SELECT IdTarea FROM aw_tareas_user_tarea WHERE IdUser = ? and hecho = 1 GROUP BY IdTarea HAVING COUNT(*)<=1;",
+                [idUser],
+                function (err, result) {
+                connection.release(); 
+                if (err)
+                    callback(new Error("Error borrando usuarios-tareas"));
+                else {
+                    let tareas = []
+                    let json = JSON.parse(JSON.stringify(result));
+                    json.forEach(i => tareas.push(i.IdTarea))
+                    callback(tareas)
+                }
+                });                    
+            }
+        });
+    });
+}
 
 function getIdUser(email, pool, callback) {
     pool.getConnection(function (err, connection) {

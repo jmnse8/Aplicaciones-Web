@@ -75,19 +75,21 @@ app.get("/finish/:taskId", function(request, response){
 });
 
 app.get("/deleteCompleted", function(request, response) {
-    daoT.deleteCompleted((err, res) => {
+    daoT.deleteCompleted("bill.puertas@ucm.es", (err, res) => {
         if(err){
             console.log(err.message);
             response.end();
         }
         else if(!res){
+            response.status(200);
             console.log("Error al eliminar las tareas finalizadas");
             response.redirect('/');
         }
         else{
+            response.status(200);
             response.redirect('/');
         }        
-    })    
+    })     
 });
 
 app.post("/addTask", function(request, response){
