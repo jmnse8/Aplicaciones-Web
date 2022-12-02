@@ -108,6 +108,7 @@ function deleteEtiquetas(tareas, pool, callback) {
             if (err)
                 callback(new Error("Error borrando etiquetas"));
             else {
+                console.log("DELETE ETIQUETAS")
                 callback();
             }
             });
@@ -127,6 +128,7 @@ function deleteTareasEtiquetas(tareas, pool, callback) {
             if (err)
                 callback(new Error("Error borrando tareas-etiquetas"));
             else {
+                console.log("DELETE TAREAS-ETIQUETAS")
                 callback();
             }
             });
@@ -146,6 +148,7 @@ function deleteTareas(tareas, pool, callback) {
             if (err)
                 callback(new Error("Error borrando tareas"));
             else {
+                console.log("DELETE TAREAS")
                 callback();
             }
             });
@@ -159,13 +162,14 @@ function deleteUsuariosTareas(email, pool, callback){
             if (err) {
                 callback(new Error("Error de conexión a la base de datos"));
             } else {
-                connection.query("DELETE aw_tareas_user_tarea FROM aw_tareas_user_tarea WHERE IdUser = ?",
+                connection.query("DELETE aw_tareas_user_tarea FROM aw_tareas_user_tarea WHERE IdUser = ? and hecho = 1",
                 [idUser],
                 function (err, result) {
                 connection.release(); 
                 if (err)
                     callback(new Error("Error borrando usuarios-tareas"));
                 else {
+                    console.log("DELETE USUARIOS-TAREAS")
                     callback();
                 }
                 });
