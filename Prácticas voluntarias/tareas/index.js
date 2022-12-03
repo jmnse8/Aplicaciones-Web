@@ -75,7 +75,7 @@ app.get("/finish/:taskId", function(request, response){
 });
 
 app.get("/deleteCompleted", function(request, response) {
-    daoT.deleteCompleted("bill.puertas@ucm.es", (err, res) => {
+    daoT.deleteCompleted("steve.curros@ucm.es", (err, res) => {
         if(err){
             console.log(err.message);
             response.end();

@@ -82,15 +82,18 @@ class DAOTasks {
     }
 
     deleteCompleted (email, callback) {
+        deleteUsuariosTareas(email, this.pool, () => {})
+        /*
         getTareasUsuario(email, this.pool, (tareas) => {
             deleteEtiquetas(tareas, this.pool, () => {
                 deleteTareasEtiquetas(tareas, this.pool, () => {
                     deleteTareas(tareas, this.pool, () => {
-                        deleteUsuariosTareas(email, this.pool, () => {})
+                        
                     })
                 })
             })
         })  
+        */
     }
 }
 
@@ -101,7 +104,7 @@ function deleteEtiquetas(tareas, pool, callback) {
         if (err) {
             callback(new Error("Error de conexión a la base de datos"));
         } else {
-            connection.query("DELETE aw_tareas_etiquetas FROM aw_tareas_etiquetas WHERE IdEtiqueta IN (SELECT IdEtiqueta FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN ?",
+            connection.query("DELETE aw_tareas_etiquetas FROM aw_tareas_etiquetas WHERE IdEtiqueta IN (SELECT IdEtiqueta FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN ( " + tareas.join(',') + " )",
             [tareas],
             function (err, result) {
             connection.release(); 
@@ -121,7 +124,7 @@ function deleteTareasEtiquetas(tareas, pool, callback) {
         if (err) {
             callback(new Error("Error de conexión a la base de datos"));
         } else {
-            connection.query("DELETE aw_tareas_tareas_etiquetas FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN ?",
+            connection.query("DELETE aw_tareas_tareas_etiquetas FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN ( " + tareas.join(',') + " )",
             [tareas],
             function (err, result) {
             connection.release(); 
@@ -141,7 +144,7 @@ function deleteTareas(tareas, pool, callback) {
         if (err) {
             callback(new Error("Error de conexión a la base de datos"));
         } else {
-            connection.query("DELETE aw_tareas_tareas FROM aw_tareas_tareas WHERE IdTarea IN ?",
+            connection.query("DELETE aw_tareas_tareas FROM aw_tareas_tareas WHERE IdTarea IN ( " + tareas.join(',') + " )",
             [tareas],
             function (err, result) {
             connection.release(); 
