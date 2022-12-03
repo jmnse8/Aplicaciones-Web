@@ -82,7 +82,7 @@ class DAOTasks {
     }
 
     deleteCompleted (email, callback) {
-        deleteUsuariosTareas(email, this.pool, () => {})
+        //deleteUsuariosTareas(email, this.pool, () => {})
         /*
         getTareasUsuario(email, this.pool, (tareas) => {
             deleteEtiquetas(tareas, this.pool, () => {
