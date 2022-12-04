@@ -11,19 +11,21 @@ class DAOUsers {
                 callback(new Error("Error de conexión a la base de datos"));
             }
             else {
-                connection.query("SELECT * FROM user WHERE email = ? AND password = ?",
-                    [email, password],
-                    function (err, rows) {
+                connection.query("SELECT * FROM aw_tareas_usuarios WHERE email = ?",
+                    [correo],
+                    function (err, row) {
                         connection.release(); // devolver al pool la conexión
                         if (err) {
                             callback(new Error("Error de acceso a la base de datos"));
                         }
                         else {
-                            if (rows.length === 0) {
+                            if (row.length === 0) {
                                 callback(null, false); //no está el usuario con el password proporcionado
                             }
                             else {
-                                callback(null, true);
+                                let json = JSON.parse(JSON.stringify(row));
+                                let user = json[0];
+                                callback(null, user);
                             }
                         }
                     });
@@ -32,14 +34,35 @@ class DAOUsers {
         );
     }
 
+    newUser(email, contraseña, imagen, callback) {
+        this.pool.getConnection((err, connection) => {
+            if (err) {
+                callback(new Error("Error en la conexión a la base de datos"));
+            } else {
+                const sql = "INSERT INTO aw_tareas_usuarios (email, password, img) VALUES (?, ?, ?)";
+                connection.query(sql, [email, contraseña, imagen],
+                    function (err, rows) {
+                        connection.release();
+                        if (err) {
+                            callback(new Error("Error al acceso a la base de datos"));
+                            console.log(err.stack);
+                        }
+                        else {
+                            callback(rows);
+                        }
+                    })
+            }
+        })
+    }
+
     
-    getUserImageName(email, callback) {
+    getUserImage(id, callback) {
         this.pool.getConnection(function (err, con) {
             if (err)
                 callback(err);
             else {
-                con.query("SELECT Imagen FROM aw_tareas_usuarios WHERE email = ?",
-                 [email], function (err, result) {
+                con.query("SELECT img FROM aw_tareas_usuarios WHERE IdUser = ?",
+                 [id], function (err, result) {
                     con.release();
                     if (err) {
                         callback(err);
@@ -48,7 +71,7 @@ class DAOUsers {
                         if (result.length === 0)
                             callback("No existe");
                         else
-                            callback(null, result[0].Imagen);
+                            callback(null, result[0].img);
                 });
             }
         });

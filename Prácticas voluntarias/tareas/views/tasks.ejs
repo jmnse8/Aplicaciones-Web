@@ -5,8 +5,8 @@
 
     <meta charset="UTF-8">
 
-    <title>Práctica voluntaria 1</title>
-    <link rel="shortcut icon" href="./resources/images/app-icon.svg" type="image/x-icon">
+    <title>Tareas</title>
+    <link rel="shortcut icon" href="/images/app-icon.svg" type="image/x-icon">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
     <link rel="stylesheet" href="/css/tasksScreen.css" media="screen" />
 
@@ -38,11 +38,11 @@
 
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <div class="row align-items-center me-3">
-                    <div class="col-auto"><img class="foto-redonda" src="/images/noUser.png" alt="foto perfil"></div>
+                    <div class="col-auto"><img class="foto-redonda" src="/imagen/<%= usuario.Id %>" alt="foto perfil"></div>
                     <div class="col-auto">
-                        Nombre usuario
+                        <%= usuario.email %> 
                     </div>
-                    <div class="col-auto"><button type="button" class="btn bg-gradient text-light">DESCONECTAR</button>
+                    <div class="col-auto"><a href="/logout" type="button" class="btn bg-gradient text-light">DESCONECTAR</a>
                     </div>
                 </div>
             </div>

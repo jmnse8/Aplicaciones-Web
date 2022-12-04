@@ -1,26 +1,36 @@
 <div class="modal" <% if (usuario==null) { %> id="borrarModal<%=aviso.Id%>" <% } else { %> id="borrarModal<%=usuario.Id%>"<% } %> data-bs-backdrop="static" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-body text-center">
-        <% if (usuario == null) { %>
-          <p>¿Está seguro que desea borrar el aviso?</p>
-        <% } else { %>
-          <p>¿Está seguro que desea borrar al usuario?</p>
-        <% } %>
-      </div>
-      <div class="modal-footer d-flex justify-content-around">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <% if (usuario == null) { %>
-          <form action="/borrarAviso/<%=aviso.Id%>" method="post">
+      <% if (usuario == null) { %>
+        <form action="/borrarAviso/<%=aviso.Id%>" method="post"></form>
+          <div class="modal-body p-3">
+            <div class="row">
+              <div class="col-12">
+                <p>¿Está seguro que desea borrar el aviso?</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <textarea class="form-control" placeholder="Leave a comment here" name="comentarios" id="floatingTextarea" style="height: 8em" required aria-required="Necesita dar un comentario para borrar"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             <button type="submit" class="btn btn-danger">Borrar</button>
-          </form>
-        <% } else { %>
-          <form action="/borrarUsuario/<%=usuario.Id%>" method="post">
-            <button type="submit" class="btn btn-danger">Borrar</button>
-          </form>
-        <% } %>
-        
-      </div>
+          </div>
+        </form>
+      <% } else { %>
+        <div class="modal-body">
+          <p>¿Está seguro que desea borrar al usuario con nombre <%=usuario.nombre%>?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <form action="/borrarUsuario/<%=usuario.Id%>" method="post">
+              <button type="submit" class="btn btn-danger">Borrar</button>
+            </form>
+        </div>
+      <% } %>
     </div>
   </div>
 </div>

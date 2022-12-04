@@ -19,3 +19,9 @@ module.exports = {
     passwordFormat : passwordFormat,
     samePassword : samePassword
 }
+
+module.exports = {
+    emai: emailFormat,
+    dfs: passwordFormat,
+    sam: samePassword
+}
