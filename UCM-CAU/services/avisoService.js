@@ -201,6 +201,24 @@ class AvisoService {
         });
     }
 
+    responderAviso(comentarios, idAvi, callback) {
+        
+        this.avisoDAO.deleteAviso(comentarios, idAvi, (err, result) => {
+            if (err) {
+                console.log(err.message);
+                //response.end();
+                callback(false);
+            }
+            else if (!result) {
+                console.log("No existe el aviso");
+                callback(false);
+                //response.render("login", {errores: false});
+            }
+            else {
+                callback(result);
+            }
+        });
+    }
 }
 
 module.exports = AvisoService;

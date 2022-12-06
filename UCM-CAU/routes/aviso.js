@@ -98,5 +98,10 @@ app.post("/asignarTecnico", (request, response) => {
     //response.redirect("misavisos");
 });
 
+app.post("/responderAviso", (request, response) => {
+    let idAvi = Number(request.body.idAvi);
+    avisoService.responderAviso(request.body.comentarios, idAvi, () => response.redirect("/avisosentrantes"));
+});
+
 
 module.exports = app;

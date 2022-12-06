@@ -30,14 +30,18 @@
                     </div>
                 </div>
                 <hr class="divider">
-                <% if (usuario.nEmpleado == null || avi.comentarios != '') { %>
+                <% if (avi.comentarios != '') { %>
                     <div class="text-center">
                         <h5>Comentarios del técnico</h5>
                     </div>
                     <div class="row">
-                        <p>
-                            <%= avi.comentarios %>
-                        </p>
+                        <div class="card border border-dark" style="width:90%; margin:auto;">
+                            <div class="card-body">
+                                <p>
+                                    <%= avi.comentarios %>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 <% } %>
                 <% if (typeof tecnicos !== 'undefined' && avi.nEmpleado == null) { %>
@@ -76,7 +80,7 @@
             </div>
             <% if (usuario.nEmpleado == null || avi.comentarios != '') { %>
                 <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn button-tema">Understood</button>
+                    <button type="button" data-bs-dismiss="modal" class="btn button-tema">Entendido</button>
                 </div>
             <% } %>
         </div>
