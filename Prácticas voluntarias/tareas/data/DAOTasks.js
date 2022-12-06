@@ -81,19 +81,18 @@ class DAOTasks {
         });    
     }
 
-    deleteCompleted (email, callback) {
-        //deleteUsuariosTareas(email, this.pool, () => {})
-        /*
+    deleteCompleted (email, callback) {        
         getTareasUsuario(email, this.pool, (tareas) => {
             deleteEtiquetas(tareas, this.pool, () => {
                 deleteTareasEtiquetas(tareas, this.pool, () => {
                     deleteTareas(tareas, this.pool, () => {
-                        
+                        deleteUsuariosTareas(email, this.pool, () => {
+                            callback(null, true);
+                        })
                     })
                 })
             })
         })  
-        */
     }
 }
 
@@ -198,8 +197,8 @@ function getTareasUsuario(email, pool, callback) {
                 else {
                     let tareas = []
                     let json = JSON.parse(JSON.stringify(result));
-                    json.forEach(i => tareas.push(i.IdTarea))
-                    callback(tareas)
+                    json.forEach(i => tareas.push(i.IdTarea));
+                    callback(tareas);
                 }
                 });                    
             }

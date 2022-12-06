@@ -52,6 +52,20 @@ app.use(middlewareSession);
 const daoT = new DAOTasks(pool);
 const daoU = new DAOUsers(pool);
 
+/*
+app.use(function(request, response){
+    response.status(404);
+    response.render("error400", {url:request.url});
+    //response.end();
+});
+
+app.use(function(error,request, response,next){
+    response.status(500);
+    response.render("error500", {url:request.url});
+    //response.end();
+});
+*/
+
 app.get("/", function(request, response){
     let usuario = request.session.usuario;
     
@@ -195,14 +209,9 @@ app.post("/signup",
                     response.end();
                 }
                 else {
-                    console.log(result);
-                    let user = {
-                        id: result.insertId,
-                        email: request.body.email
-                    }
-                    request.session.usuario = user;
-                    response.redirect("/"); 
-                        
+                    console.log("Morata balon de oro");
+                    response.status(200);
+                    response.redirect("login");                         
                 }
              }
         )
@@ -268,16 +277,9 @@ app.get("/imagen/:id", (request, response) => {
     }
 );
 
-app.use(function(request, response){
-    response.status(404);
-    response.render("error400", {url:request.url});
-    //response.end();
-});
-
-app.use(function(error,request, response,next){
-    response.status(500);
-    response.render("error500", {url:request.url});
-    //response.end();
+app.post("/prueba", (request, response) => {
+    response.status(200)
+    response.redirect("login")
 });
 
 app.listen(config.port, function (err) {
@@ -288,7 +290,6 @@ app.listen(config.port, function (err) {
         console.log(`Servidor arrancado en el puerto ${config.port}`);
     }
 });
-
 
 /* daoTask.insertTask("bill.puertas@ucm.es", task, (err, result) => {
     if (err) {

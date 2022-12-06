@@ -44,11 +44,11 @@ class DAOUsers {
                     function (err, rows) {
                         connection.release();
                         if (err) {
-                            callback(new Error("Error al acceso a la base de datos"));
                             console.log(err.stack);
+                            callback(new Error("Error al acceso a la base de datos"));
                         }
                         else {
-                            callback(rows);
+                            callback(null, rows);
                         }
                     })
             }
