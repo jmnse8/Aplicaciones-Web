@@ -84,10 +84,18 @@ app.post("/search", (request, response) => {
     }
 });
 
-app.post("/borrarAviso/:idAviso", (request, response) => {
-    let idAvi = Number(request.params.idAviso);
-    avisoService.deleteAviso(idAvi, () => response.redirect("/avisosentrantes"));
+app.post("/borrarAviso", (request, response) => {
+    let idAvi = Number(request.body.idAvi);
+    avisoService.deleteAviso(request.body.comentarios, idAvi, request.session.usuario.nombre, () => response.redirect("/avisosentrantes"));
     //console.log(idAvi);
+});
+
+app.post("/asignarTecnico", (request, response) => {
+    let nEmpleado = request.body.tecnico;
+    let idAvi = request.body.idAvi;
+    console.log(nEmpleado + " " + idAvi);
+    avisoService.asignarTecnico(nEmpleado, idAvi, () => response.redirect("/misavisos"));
+    //response.redirect("misavisos");
 });
 
 

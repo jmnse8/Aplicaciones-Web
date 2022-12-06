@@ -69,7 +69,7 @@ class UserService {
             password = false
         }
         // Number Employee Format
-        let x=$("#checkbox").is(":checked");
+        let x = true;//$("#checkbox").is(":checked");
         let employeeNumber = true;
         if (x) {
             employeeNumber = false;

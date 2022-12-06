@@ -176,7 +176,7 @@ class UserDAO {
                 callback(new Error("Error en la conexión a la base de datos"));
             }
             else {
-                const sql = "SELECT ID, nombre FROM ucm_aw_cau_usu_usuarios WHERE nEmpleado IS NOT NULL;";
+                const sql = "SELECT Id, nEmpleado, nombre FROM ucm_aw_cau_usu_usuarios WHERE nEmpleado IS NOT NULL;";
                 connection.query(sql,
                     function (err, row) {
                         connection.release();

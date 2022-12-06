@@ -10,15 +10,21 @@ class AvisoDAO {
     VALUES (9, NULL, 'certificado digital de persona fisica', '', 'ayudaaaa', 1, 'sugerencia', '2008-01-02 01:01:01.000001');
     */
 
-    getMisAvisos(userId, callback) {
+    getMisAvisos(identificacion, tecnico, callback) {
         //console.log(userId);
         this.pool.getConnection((err, connection) => {
             if (err) {
                 callback(new Error("Error en la conexión a la base de datos"));
             }
             else {
-                const sql = "SELECT * FROM ucm_aw_cau_avi_avisos WHERE usu_id = ? and activo = true";
-                connection.query(sql, [userId],
+                let sql;
+                if(tecnico)
+                    sql = "SELECT * FROM ucm_aw_cau_avi_avisos WHERE nEmpleado = ? and activo = true";
+                else
+                    sql = "SELECT * FROM ucm_aw_cau_avi_avisos WHERE usu_id = ? and activo = true";
+                
+                //const sql = "SELECT * FROM ucm_aw_cau_avi_avisos WHERE usu_id = ? and activo = true";
+                connection.query(sql, [identificacion],
                     function (err, row) {
                         connection.release();
                         if (err) {
@@ -183,15 +189,15 @@ class AvisoDAO {
     }
 
 
-    deleteAviso(idAvi, callback) {
+    deleteAviso(comentarios, idAvi, callback) {
         //console.log(userId);
         this.pool.getConnection((err, connection) => {
             if (err) {
                 callback(new Error("Error en la conexión a la base de datos"));
             }
             else {
-                const sql = "DELETE FROM ucm_aw_cau_avi_avisos WHERE Id = ?";
-                connection.query(sql, idAvi ,
+                const sql = "UPDATE ucm_aw_cau_avi_avisos SET activo = false, comentarios = ? WHERE Id = ?";
+                connection.query(sql, [comentarios, idAvi] ,
                     function (err, row) {
                         connection.release();
                         if (err) {
@@ -204,6 +210,33 @@ class AvisoDAO {
                             }
                             else {
                                 callback(null, row);
+                            }
+                        }
+                    })
+            }
+        });
+    }
+
+    asignaTecnico(nEmpleado, idAvi, callback){
+        this.pool.getConnection((err, connection) => {
+            if (err) {
+                callback(new Error("Error en la conexión a la base de datos"));
+            }
+            else {
+                const sql = "UPDATE ucm_aw_cau_avi_avisos SET nEmpleado = ? WHERE Id = ?";
+                connection.query(sql, [nEmpleado, idAvi] ,
+                    function (err, row) {
+                        connection.release();
+                        if (err) {
+                            callback(new Error("Error al acceso a la base de datos"));
+                            console.log(err.stack);
+                        }
+                        else {
+                            if (row.length === 0) {
+                                callback(null, false);
+                            }
+                            else {
+                                callback(null, true);
                             }
                         }
                     })

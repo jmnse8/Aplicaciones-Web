@@ -8,17 +8,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <hr style="height:5px; width:100%; color:rgb(0, 0, 0);">
-                <div class="d-flex justify-content-around">
-                    <div class="row"><h5 class="col-auto"> Perfil: </h5><p class="col-auto"><%= usuario.perfil %></p></div>                    
-                </div>
-                <hr style="height:5px; width:100%; color:rgb(0, 0, 0);">
-                <div class="d-flex justify-content-around">
+                <!-- <div class="d-flex justify-content-around">
+                                        
+                </div> -->
+                <div class="d-flex justify-content-evenly">
+                    <div class="row"><h5 class="col-auto"> Perfil: </h5><p class="col-auto"><%= usuario.perfil %></p></div>
                     <div class="row"><h5 class="col-auto"> Fecha: </h5><p class="col-auto"><%= avi.fecha %></p></div>
-                    <div class="row"><h5 class="col-auto"> Comunicaciones: </h5><p class="col-auto"><%= avi.tema %></p></div>                  
+                    <div class="row"><h5 class="col-auto"> <%=avi.tema.split("-")[0]%> : </h5><p class="col-auto"><%= avi.tema.split("-")[1] %></p></div>                  
                 </div>
-                <hr style="height:5px; width:100%; color:rgb(0, 0, 0);">
-                <div class="d-flex justify-content-around">
+                <hr class="divider">
+                <div class="d-flex justify-content-center">
                     <h5 class="col-auto">Observaciones</h5>
                 </div>
                 <div class="row">
@@ -30,34 +29,56 @@
                         </div>
                     </div>
                 </div>
-                <hr style="height:5px; width:100%; color:rgb(0, 0, 0);">
-                <div class="text-center">
-                    <h5>Comentarios del técnico</h5>
-                </div>
-                <hr style="height:5px; width:100%; color:rgb(0, 0, 0);">
-                <div class="row">
-                    <p>
-                        <%= avi.comentarios %>
-                    </p>
-                </div>
-                <% if (typeof tecnicos !== 'undefined') { %>
-                    <div class="d-flex justify-content-around">
-                        <div class="row">
-                            <h5 class="col-auto">Técnico asignado</h5>
-                            <select class="col-auto" name="" id="">
-                                <% tecnicos.forEach( t => { %>
-                                    <option value="<%= t.id %>"><%= t.nombre %></option>
-                                <% }); %>
-                            </select>
-                        </div>
+                <hr class="divider">
+                <% if (usuario.nEmpleado == null || avi.comentarios != '') { %>
+                    <div class="text-center">
+                        <h5>Comentarios del técnico</h5>
+                    </div>
+                    <div class="row">
+                        <p>
+                            <%= avi.comentarios %>
+                        </p>
                     </div>
                 <% } %>
+                <% if (typeof tecnicos !== 'undefined' && avi.nEmpleado == null) { %>
+                    <form action="/asignarTecnico" method="post">
+                        
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-auto"><h5>Técnico asignado</h5></div>
+                            <div class="col-auto">
+                                <select class="form-select form-select-sm" name="tecnico" id="tecnico">
+                                    <% tecnicos.forEach( t => { %>
+                                        <option value="<%= t.nEmpleado %>"><%= t.nombre %></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                            <input type="hidden" name="idAvi" value="<%= avi.Id %>">
+                            <div class="col-auto">
+                                <button class="btn button-tema" type="submit">Asignar</button>
+                            </div>
+                        </div>
+                        
+                    </form>
                 
-                <hr style="height:5px; width:100%; color:rgb(0, 0, 0);">    
+                <% } else if (usuario.nEmpleado != null && avi.nEmpleado != null && usuario.nEmpleado === avi.nEmpleado  && avi.comentarios == '') { %>
+                    <form action="/responderAviso" method="post">
+                        <div class="text-center">
+                            <h5>Dejar cometarios</h5>
+                        </div>
+                        <input type="hidden" name="idAvi" value="<%= avi.Id %>">
+                        <div class="row p-2">
+                            <textarea class="form-control" placeholder="Leave a comment here" name="comentarios" id="floatingTextarea" style="height: 8em" required aria-required="Necesita dar un comentario para eliminar"></textarea>
+                            <button class="btn button-tema mt-2" type="submit">Responder</button>
+                        </div>
+                    </form>
+                <% } %>
+                 
             </div>
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-primary">Understood</button>
-            </div>
+            <% if (usuario.nEmpleado == null || avi.comentarios != '') { %>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn button-tema">Understood</button>
+                </div>
+            <% } %>
         </div>
     </div>
 </div>

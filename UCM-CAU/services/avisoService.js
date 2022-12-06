@@ -12,7 +12,15 @@ class AvisoService {
 
     getMisAvisos(user, callback) {
         //const errors = validationResult(request);
-        this.avisoDAO.getMisAvisos(user.Id, (err, result) => {
+        let identificacion = 0, tecnico = false;
+        if(user.nEmpleado != null){
+            tecnico = true;
+            identificacion = user.nEmpleado;
+        }
+        else{
+            identificacion = user.Id;
+        }
+        this.avisoDAO.getMisAvisos(identificacion, tecnico, (err, result) => {
             if (err) {
                 console.log(err.message);
                 //response.end();
@@ -64,8 +72,6 @@ class AvisoService {
                         callback(avisos, tecnicos);
                     }
                 });
-
-
             }
         });
     }
@@ -127,6 +133,7 @@ class AvisoService {
 
         let identificacion = 0, tecnico = false;
         if(user.nEmpleado != null){
+            tecnico = true;
             identificacion = user.nEmpleado;
         }
         else{
@@ -154,8 +161,30 @@ class AvisoService {
 
     }
 
-    deleteAviso(idAvi, callback) {
-        this.avisoDAO.deleteAviso(idAvi, (err, result) => {
+    deleteAviso(comentarios, idAvi, nombreTec, callback) {
+        if(comentarios === '')
+            comentarios = 'Este aviso ha sido eliminado por el técnico ' + nombreTec;
+        else
+            comentarios = 'Este aviso ha sido eliminado por el técnico ' + nombreTec +' debido a: ' + comentarios;
+        this.avisoDAO.deleteAviso(comentarios, idAvi, (err, result) => {
+            if (err) {
+                console.log(err.message);
+                //response.end();
+                callback(false);
+            }
+            else if (!result) {
+                console.log("No existe el aviso");
+                callback(false);
+                //response.render("login", {errores: false});
+            }
+            else {
+                callback(result);
+            }
+        });
+    }
+
+    asignarTecnico(nEmpleado, idAvi, callback){
+        this.avisoDAO.asignaTecnico(nEmpleado, idAvi, (err, result) => {
             if (err) {
                 console.log(err.message);
                 //response.end();
