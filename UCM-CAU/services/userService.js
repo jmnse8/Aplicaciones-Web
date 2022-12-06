@@ -61,10 +61,26 @@ class UserService {
         else {
             imagen = fs.readFileSync("./public/images/logoUCM.jpg");
         }
-        let passwordsEquals = (request.body.password === request.body.password2);
+        // Password Format
+        let password = (request.body.password === request.body.password2);
+        let up = request.body.password.toUpperCase();
+        let low = request.body.password.toLowerCase();
+        if (request.body.password === low || request.body.password === up) {
+            password = false
+        }
+        // Number Employee Format
+        let x=$("#checkbox").is(":checked");
+        let employeeNumber = true;
+        if (x) {
+            employeeNumber = false;
+            if (request.body.nEmpleado.length == 8){
+                let regExp = /^[0-9]{4}-[a-z]{3}$/;  // mirar sintaxis // 4 digitos, guion, 3 letras minusculas
+                employeeNumber = regExp.test(param);
+            }
+        }
         const errors = validationResult(request);
 
-        if (errors.isEmpty() && passwordsEquals) {
+        if (errors.isEmpty() && password && employeeNumber) {
             this.userDAO.newUser(
                 request.body.name, request.body.email, request.body.password,
                 imagen, request.body.perfil, request.body.nEmpleado,

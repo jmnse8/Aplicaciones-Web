@@ -3,7 +3,6 @@ const express = require("express");
 const app = express();
 const { check, validationResult } = require("express-validator");
 const UserService = require("../services/userService");
-const utils = require("../resources/utils")
 const multer = require("multer");
 const multerFactory = multer({ storage: multer.memoryStorage() });
 
@@ -41,12 +40,11 @@ app.get("/signup", function (request, response) {
 
 app.post("/signup",
     multerFactory.single('image'),
-    /*
     check("name", "Rellene el campo Nombre").notEmpty(),
     check("email", "El formato del correo no es correcto").matches(/\S+@\S+\.\S+/),
     check("password", "Rellene el campo Contraseña").notEmpty(),
-    check("password", "La contraseña no cumple con el formato especificado").custom(utils.passwordFormat()),
-    */
+    check("password", "No cumple con la longitud solicitada").isLength({ min: 8, max: 16 }),
+    check("password", "El formato de la contraseña no es correcto").matches(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/),
     (request, response) => {
         userService.signup(request, response, request.file);
     }
