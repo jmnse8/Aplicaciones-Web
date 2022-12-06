@@ -47,8 +47,6 @@ app.use(middlewareSession);
 
 // Arrancar el servidor
 
-
-
 const daoT = new DAOTasks(pool);
 const daoU = new DAOUsers(pool);
 
@@ -100,13 +98,16 @@ app.get("/finish/:taskId", function(request, response){
     daoT.markTaskDone(taskId, (err, res) => {
         if(err){
             console.log(err.message);
+            response.status(500);
             response.end();
         }
         else if(!res){
             console.log("Error al marcar la tarea como finalizada");
+            response.status(500);
             response.redirect('/');
         }
         else{
+            response.status(200);
             response.redirect('/');
         }
         
@@ -121,6 +122,7 @@ app.get("/deleteCompleted", function(request, response) {
         daoT.deleteCompleted(usuario.email, (err, res) => {
             if(err) {
                 console.log(err.message);
+                response.status(500);
                 response.end();
             }
             else if(!res) {
@@ -150,6 +152,7 @@ app.post("/addTask", function(request, response){
         daoT.insertTask(usuario.email, task, (err, result) => {
             if (err) {
                 console.log(err.message);
+                response.status(500);
                 response.end();
             }
             else if (!result) {
@@ -209,7 +212,6 @@ app.post("/signup",
                     response.end();
                 }
                 else {
-                    console.log("Morata balon de oro");
                     response.status(200);
                     response.redirect("login");                         
                 }
@@ -225,10 +227,12 @@ app.post("/login", (request, response) => {
         daoU.isUserCorrect(email, (err, result) => {
                 if (err) {
                     console.log(err.message);
+                    response.status(500);
                     response.end();
                 }
                 else if (!result) {
-                    console.log("no existe ese usuario");
+                    console.log("No existe ese usuario");
+                    response.status(400);
                     response.render("login", { errores: false });
                 }
                 else {
@@ -242,7 +246,7 @@ app.post("/login", (request, response) => {
                         response.redirect("/");
                     }
                     else {
-                        console.log("la contraseña no coincide " + password + result);
+                        console.log("La contraseña no coincide " + password + result);
                         response.render("login", { errores: false });
                     }
                 }
@@ -265,12 +269,12 @@ app.get("/imagen/:id", (request, response) => {
         } else {
             daoU.getUserImage(n, function (err, imagen) {
                 if (imagen) {
+                    response.status(200);
                     response.end(imagen);
                 } else {
                     console.log('sin imagen');
                     response.status(404);
-                    response.end("Not found");
-                    //response.end("./public/images/logoUCM.jpg");
+                    response.end("Not found"); //response.end("./public/images/logoUCM.jpg");
                 }
             });
         }
@@ -287,22 +291,6 @@ app.listen(config.port, function (err) {
         console.log("ERROR al iniciar el servidor");
     }
     else {
-        console.log(`Servidor arrancado en el puerto ${config.port}`);
+        console.log("Servidor arrancado en el puerto ${config.port}");
     }
 });
-
-/* daoTask.insertTask("bill.puertas@ucm.es", task, (err, result) => {
-    if (err) {
-        console.log(err.message);
-        response.end();
-    }
-    else if (!result) {
-        console.log("no existe ese usuario");
-        //response.render("login", {errores: false});
-    }
-    else {
-        console.log(result);
-    }
-}); */
-// Definición de las funciones callback
-// Uso de los métodos de las clases DAOUsers y DAOTasks
