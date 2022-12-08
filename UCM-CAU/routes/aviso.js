@@ -83,7 +83,7 @@ app.post("/search", (request, response) => {
 
 app.post("/borrarAviso", (request, response) => {
     let idAvi = Number(request.body.idAvi);
-    avisoService.deleteAviso(request.body.comentarios, idAvi, request.session.usuario.nombre, () => response.redirect("/avisosentrantes"));
+    avisoService.deleteAviso(request.body.comentarios, idAvi, request.session.usuario.nombre, request.session.usuario.Id, () => response.redirect("/avisosentrantes"));
 });
 
 app.post("/asignarTecnico", (request, response) => {
@@ -96,7 +96,7 @@ app.post("/asignarTecnico", (request, response) => {
 
 app.post("/responderAviso", (request, response) => {
     let idAvi = Number(request.body.idAvi);
-    avisoService.responderAviso(request.body.comentarios, idAvi, () => response.redirect("/avisosentrantes"));
+    avisoService.responderAviso(request.body.comentarios, idAvi, request.session.usuario.Id, () => response.redirect("/avisosentrantes"));
 });
 
 

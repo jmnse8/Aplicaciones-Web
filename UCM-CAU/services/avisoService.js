@@ -121,12 +121,25 @@ class AvisoService {
                         response.end();
                     }
                     else {
-                        if (!result) {
-                            response.redirect("misAvisos", { errores: false });
-                        }
-                        else {
-                            response.redirect("misAvisos");
-                        }
+                        this.userDAO.increaseUserStats(usuario.Id, false , categoria, (err) => {
+                            if(err){
+                                if (!result) {
+                                    response.redirect("misAvisos", { errores: false });
+                                }
+                                else {
+                                    response.redirect("misAvisos");
+                                }
+                            }
+                            else{ 
+                                if (!result) {
+                                    response.redirect("misAvisos", { errores: false });
+                                }
+                                else {
+                                    response.redirect("misAvisos");
+                                }
+                            }
+                        });
+                        
                     }
                 });
         }
@@ -183,7 +196,7 @@ class AvisoService {
 
     }
 
-    deleteAviso(comentarios, idAvi, nombreTec, callback) {
+    deleteAviso(comentarios, idAvi, nombreTec, idUsu, callback) {
         if(comentarios === '')
             comentarios = 'Este aviso ha sido eliminado por el técnico ' + nombreTec;
         else
@@ -200,7 +213,14 @@ class AvisoService {
                 //response.render("login", {errores: false});
             }
             else {
-                callback(result);
+                this.userDAO.increaseUserStats(idUsu, idAvi, false, (err) => {
+                    if(err){
+                        callback(false);
+                    }
+                    else{ 
+                        callback(result);
+                    }
+                });
             }
         });
     }
@@ -223,7 +243,7 @@ class AvisoService {
         });
     }
 
-    responderAviso(comentarios, idAvi, callback) {
+    responderAviso(comentarios, idAvi, idUsu, callback) {
         
         this.avisoDAO.deleteAviso(comentarios, idAvi, (err, result) => {
             if (err) {
@@ -237,7 +257,14 @@ class AvisoService {
                 //response.render("login", {errores: false});
             }
             else {
-                callback(result);
+                this.userDAO.increaseUserStats(idUsu, idAvi, false, (err) => {
+                    if(err){
+                        callback(false);
+                    }
+                    else{ 
+                        callback(result);
+                    }
+                });
             }
         });
     }
