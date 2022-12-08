@@ -232,19 +232,18 @@ class UserDAO {
     }
 
     increaseUserStats(idUsu,tipoAvi, callback) {
-        //console.log(userId);
         this.pool.getConnection((err, connection) => {
             if (err) {
                 callback(new Error("Error en la conexión a la base de datos"));
             }
             else {
                 let sql;
-                if(tipoAvi === 'filicitacion')
-                    sql = "DELETE FROM ucm_aw_cau_usu_usuarios WHERE Id = ?";
-                else if(tipoAvi === 'filicitacion')
-                    sql = "DELETE FROM ucm_aw_cau_usu_usuarios WHERE Id = ?";
+                if(tipoAvi === 'incidencia')
+                    sql = "UPDATE ucm_aw_cau_usu_usuarios SET nAvisos = nAvisos + 1, nIncidencias = nIncidencias + 1 WHERE Id = ?";
+                else if(tipoAvi === 'sugerencia')
+                    sql = "UPDATE ucm_aw_cau_usu_usuarios SET nAvisos = nAvisos + 1, nSugerencias = nSugerencias + 1 WHERE Id = ?";
                 else
-                    sql = "DELETE FROM ucm_aw_cau_usu_usuarios WHERE Id = ?";
+                    sql = "UPDATE ucm_aw_cau_usu_usuarios SET nAvisos = nAvisos + 1, nFelicitaciones = nFelicitaciones + 1 WHERE Id = ?";
                 connection.query(sql, idUsu ,
                     function (err, row) {
                         connection.release();
@@ -253,12 +252,7 @@ class UserDAO {
                             console.log(err.stack);
                         }
                         else {
-                            if (row.length === 0) {
-                                callback(null, false);
-                            }
-                            else {
-                                callback(null, row);
-                            }
+                            callback(null);
                         }
                     })
             }
