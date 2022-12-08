@@ -30,12 +30,9 @@ app.get("/misavisos", function (request, response) {
     let panel = 2;
     let usuario = request.session.usuario;
     avisoService.getMisAvisos(usuario, (avisos) => {
-        //console.log('Router-------');
-        //console.log(avisos);
         let temas = temas1[usuario.perfil];
         response.render("misAvisos.ejs", { usuario, panel, avisos, temas });
     });
-    //request.session.usuario
 });
 
 app.get("/historico", function (request, response) {
@@ -55,7 +52,7 @@ app.get("/gestionUsuarios", function (request, response) {
     if (usuario)
         if (usuario.nEmpleado != null)
             userService.getAllUsers((usuarios) => {
-                response.render("gestionUsuarios.ejs", { usuario, usuarios, panel });
+                response.render("gestionUsuariosV2.ejs", { usuario, usuarios, panel });
             });
         else
             response.redirect("misavisos");
@@ -87,7 +84,6 @@ app.post("/search", (request, response) => {
 app.post("/borrarAviso", (request, response) => {
     let idAvi = Number(request.body.idAvi);
     avisoService.deleteAviso(request.body.comentarios, idAvi, request.session.usuario.nombre, () => response.redirect("/avisosentrantes"));
-    //console.log(idAvi);
 });
 
 app.post("/asignarTecnico", (request, response) => {

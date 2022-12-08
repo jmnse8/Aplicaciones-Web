@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include("head") %>
+    <link rel="stylesheet" href="/css/gestionUsuarios.css">
+</head>
+<body>
+    <%- include("navbar", {usuario: usuario, panel: panel}) %>
+
+    <div id="image-track" data-mouse-down-at="0" data-prev-percentage="0">
+        <% usuarios.forEach( usu => { %>
+            <div class="tarjeta" >
+                <div class="borrar-btn">
+                    
+                    <i class="fa-solid fa-trash basura basura-usuario" data-bs-toggle="modal" data-bs-target="#borrarModal<%=usu.Id%>"></i>
+                    <div class="difuminado-fondo"></div>
+                </div>
+                <img class="image" src="/imagen/<%=usu.Id%>" draggable="false" />
+
+                <div class="info" onclick="window.location='/profile/<%=usu.Id%>'">
+                    <div class="row">
+                        <h5><%=usu.nombre%></h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                        <% if(usu.nEmpleado !== null) {%>
+                            <p>Téctico</p>
+                        <% } else { %>
+                            <p>Usuario</p>
+                        <% } %>
+                        </div>
+                        <div class="col-auto">
+                            <p><%=usu.fecha%></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+    <% usuarios.forEach( usu => { %>
+        <%- include("borrarModal", {aviso: null, usuario: usu}) %>
+    <% }); %>
+    
+    <script src="/scripts/gestionUsuarios.js"></script>
+</body>
+</html>

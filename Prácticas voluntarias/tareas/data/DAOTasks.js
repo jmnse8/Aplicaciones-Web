@@ -54,7 +54,11 @@ class DAOTasks {
             insertTask(task.text, this.pool, (idTarea) => {
                 joinUserTask(idUser, idTarea, false, this.pool, (bien) => {
                     insertTags(task.tags, this.pool, (idTags) => {
-                        idTags.forEach(t => joinTaskTag(idTarea, t,this.pool, (bien2) => {}));
+                            
+                        idTags.forEach(t => joinTaskTag(idTarea, t,this.pool, (bien2) => {
+
+                        }));
+                        callback(null, true)
                     });
                 });
             });
@@ -80,8 +84,21 @@ class DAOTasks {
             }
         });    
     }
-
     deleteCompleted (email, callback) {        
+        getTareasUsuario(email, this.pool, (tareas) => {
+            deleteTareasEtiquetas(tareas, this.pool, () => {
+                deleteUsuariosTareas(email, this.pool, () => {
+                    deleteEtiquetas(tareas, this.pool, () => {
+                        deleteTareas(tareas, this.pool, () => {
+                            callback(null, true);
+                        })
+                    })
+                })
+            })
+        })  
+    }
+
+    /* deleteCompleted (email, callback) {        
         getTareasUsuario(email, this.pool, (tareas) => {
             deleteEtiquetas(tareas, this.pool, () => {
                 deleteTareasEtiquetas(tareas, this.pool, () => {
@@ -93,7 +110,7 @@ class DAOTasks {
                 })
             })
         })  
-    }
+    } */
 }
 
 //------------------- FUNCIONES AUXILIARES PARA INSERTAR TAREAS -------------------//
@@ -103,12 +120,18 @@ function deleteEtiquetas(tareas, pool, callback) {
         if (err) {
             callback(new Error("Error de conexión a la base de datos"));
         } else {
-            connection.query("DELETE aw_tareas_etiquetas FROM aw_tareas_etiquetas WHERE IdEtiqueta IN (SELECT IdEtiqueta FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN ( " + tareas.join(',') + " )",
-            [tareas],
+            console.log(tareas);
+            let interrogaciones = tareas.map(e => '?').join(',');
+            let sql = "DELETE aw_tareas_etiquetas FROM aw_tareas_etiquetas WHERE IdEtiqueta IN (SELECT IdEtiqueta FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN ( " + interrogaciones + ") )";
+            console.log('------' + "DELETE aw_tareas_etiquetas FROM aw_tareas_etiquetas WHERE IdEtiqueta IN (SELECT IdEtiqueta FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN ( " + interrogaciones + ") )")
+            connection.query(sql ,
+            [...tareas],
             function (err, result) {
             connection.release(); 
-            if (err)
-                callback(new Error("Error borrando etiquetas"));
+            if (err){
+                callback(new Error("Error borrando tareas"));
+                console.log(err);
+            }
             else {
                 console.log("DELETE ETIQUETAS")
                 callback();
@@ -123,12 +146,15 @@ function deleteTareasEtiquetas(tareas, pool, callback) {
         if (err) {
             callback(new Error("Error de conexión a la base de datos"));
         } else {
-            connection.query("DELETE aw_tareas_tareas_etiquetas FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN ( " + tareas.join(',') + " )",
-            [tareas],
+            let interrogaciones = tareas.map(e => '?').join(',');
+            connection.query("DELETE aw_tareas_tareas_etiquetas FROM aw_tareas_tareas_etiquetas WHERE IdTarea IN ( " + interrogaciones + " )",
+            [...tareas],
             function (err, result) {
             connection.release(); 
-            if (err)
-                callback(new Error("Error borrando tareas-etiquetas"));
+            if (err){
+                callback(new Error("Error borrando tareas"));
+                console.log(err);
+            }
             else {
                 console.log("DELETE TAREAS-ETIQUETAS")
                 callback();
@@ -143,12 +169,16 @@ function deleteTareas(tareas, pool, callback) {
         if (err) {
             callback(new Error("Error de conexión a la base de datos"));
         } else {
-            connection.query("DELETE aw_tareas_tareas FROM aw_tareas_tareas WHERE IdTarea IN ( " + tareas.join(',') + " )",
-            [tareas],
+            console.log(tareas);
+            let interrogaciones = tareas.map(e => '?').join(',');
+            connection.query("DELETE aw_tareas_tareas FROM aw_tareas_tareas WHERE IdTarea IN ( " + interrogaciones  + " )",
+            [...tareas],
             function (err, result) {
             connection.release(); 
-            if (err)
+            if (err){
                 callback(new Error("Error borrando tareas"));
+                console.log(err);
+            }
             else {
                 console.log("DELETE TAREAS")
                 callback();

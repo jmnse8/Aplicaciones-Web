@@ -6,6 +6,15 @@
     <link rel="stylesheet" href="/css/singup.css">
     <script src="/scripts/singup.js"></script>
 </head>
+    <% if (errors != false) { %>
+            <% errors.forEach (er => { %>
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <%= `${er.param} : ${er.msg} (${er.value})`%>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <% })%>
+        
+    <% } %>
 
     <body class="p-5">
         <div class="container-sm panel-principal">
@@ -13,7 +22,7 @@
                 <img class="logo" src="/images/logoUCM.jpg" alt="logo UCM">
             </div>
             <div class="row m-3">
-                <form class="" action="/singup" method="post" enctype="multipart/form-data">
+                <form class="" action="/signup" method="post" enctype="multipart/form-data">
                     <div class="row g-2">
                         <div class="col-md"><div class="form-floating mb-3">
                             <input type="email" class="form-control" name="email" id="email" placeholder="Your e-mail" required>

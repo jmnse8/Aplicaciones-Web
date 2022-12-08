@@ -23,7 +23,8 @@ function createTask(texto) {
     let titulo = "";
 
     if(texto != "" && typeof texto != "undefined" && typeof texto == "string"){
-        etiquetas = texto.match(/@\w+/g).map(n => n.replace("@",""));
+        if(texto.indexOf('@') != -1) etiquetas = texto.match(/@\w+/g).map(n => n.replace("@",""));
+        else etiquetas = ['ijdfgnradij'];
 
         titulo = texto.replace(/@\w+/g,"").trim().replace(/\s/g,' ');
     }

@@ -71,52 +71,30 @@ class UserService {
         // Number Employee Format
         let x = true;//$("#checkbox").is(":checked");
         let employeeNumber = true;
-        if (x) {
-            employeeNumber = false;
-            if (request.body.nEmpleado.length == 8){
-                let regExp = /^[0-9]{4}-[a-z]{3}$/;  // mirar sintaxis // 4 digitos, guion, 3 letras minusculas
-                employeeNumber = regExp.test(param);
-            }
+        if (x && request.body.nEmpleado.length == 8) {
+            let regExp = /^[0-9]{4}-[a-z]{3}$/;  // mirar sintaxis // 4 digitos, guion, 3 letras minusculas
+            employeeNumber = regExp.test(request.body.nEmpleado);
         }
         const errors = validationResult(request);
 
-        if (errors.isEmpty() && password && employeeNumber) {
+        if (errors.isEmpty() && password && employeeNumber) { 
             this.userDAO.newUser(
                 request.body.name, request.body.email, request.body.password,
                 imagen, request.body.perfil, request.body.nEmpleado,
-                (err, result) => {
+                (err) => {
                     if (err) {
                         console.log(err.message);
+                        response.status(500);
                         response.end();
                     }
                     else {
-                        (request, response) => {
-                            const errors = validationResult(request);
-                            if (errors.isEmpty()) {
-                                this.userDAO.getUser(request.body.email, (err, result) => {
-                                    let user = {
-                                        Id: result.Id,
-                                        email: result.email,
-                                        nombre: result.nombre,
-                                        contraseña: result.contraseña,
-                                        //let bitmap = fs.readFileSync(result.imagen);
-                                        //image : Buffer.from(result.Imagen).toString('base64'),
-                                        perfil: result.perfil,
-                                        nEmpleado: result.nEmpleado,
-                                        activo: result.activo
-                                    }
-                                    request.session.usuario = user;
-                                    response.redirect("login.ejs"); 
-                                });
-                            } else {
-                                response.redirect("signUp.ejs");
-                            }
-                        }    
+                        response.status(200);
+                        response.render("login", { errores: false });   
                     } 
                 });
         }
-        else { //aprender a usar esto
-            response.render("signUp.ejs");//, {errores: errors.mapped()}
+        else {
+            response.render("signUp.ejs", { errors: errors.array()});//, {errores: errors.mapped()}
         }
     };
 
@@ -149,6 +127,9 @@ class UserService {
                 callback(false);
             }
             else {
+                result.forEach(element => {
+                    element.fecha = element.fecha.slice(0, 19).replace('T', ' ');
+                });
                 callback(result);
             }
         });

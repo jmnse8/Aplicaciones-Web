@@ -50,6 +50,14 @@ app.use(middlewareSession);
 const daoT = new DAOTasks(pool);
 const daoU = new DAOUsers(pool);
 
+app.listen(config.port, function (err) {
+    if (err) {
+        console.log("ERROR al iniciar el servidor");
+    }
+    else {
+        console.log(`Servidor arrancado en el puerto ${config.port}`);
+    }
+});
 /*
 app.use(function(request, response){
     response.status(404);
@@ -286,11 +294,3 @@ app.post("/prueba", (request, response) => {
     response.redirect("login")
 });
 
-app.listen(config.port, function (err) {
-    if (err) {
-        console.log("ERROR al iniciar el servidor");
-    }
-    else {
-        console.log(`Servidor arrancado en el puerto ${config.port}`);
-    }
-});

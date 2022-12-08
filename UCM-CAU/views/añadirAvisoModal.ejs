@@ -2,8 +2,8 @@
 <div class="modal fade" id="añadirAvisoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">Añadir nuevo aviso de <%= usuario.name %></h1>
+        <div class="modal-header color-fondo-tema">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Añadir nuevo aviso de <%= usuario.nombre %></h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form class="" action="/newAviso" method="post">
@@ -65,8 +65,8 @@
                 
             </div>
 
-            <div class="modal-footer">
-              <button type="submit" class="btn button-tema">Añadir</button>
+            <div class="modal-footer justify-content-center">
+              <button type="submit" class="btn button-tema col-12">Añadir</button>
             </div>
         </form>
       </div>

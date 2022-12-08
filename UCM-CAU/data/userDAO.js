@@ -48,7 +48,7 @@ class UserDAO {
                             console.log(err.stack);
                         }
                         else {
-                            callback( );
+                            callback(null);
                         }
                     })
             }
@@ -211,6 +211,40 @@ class UserDAO {
             }
             else {
                 const sql = "DELETE FROM ucm_aw_cau_usu_usuarios WHERE Id = ?";
+                connection.query(sql, idUsu ,
+                    function (err, row) {
+                        connection.release();
+                        if (err) {
+                            callback(new Error("Error al acceso a la base de datos"));
+                            console.log(err.stack);
+                        }
+                        else {
+                            if (row.length === 0) {
+                                callback(null, false);
+                            }
+                            else {
+                                callback(null, row);
+                            }
+                        }
+                    })
+            }
+        });
+    }
+
+    increaseUserStats(idUsu,tipoAvi, callback) {
+        //console.log(userId);
+        this.pool.getConnection((err, connection) => {
+            if (err) {
+                callback(new Error("Error en la conexión a la base de datos"));
+            }
+            else {
+                let sql;
+                if(tipoAvi === 'filicitacion')
+                    sql = "DELETE FROM ucm_aw_cau_usu_usuarios WHERE Id = ?";
+                else if(tipoAvi === 'filicitacion')
+                    sql = "DELETE FROM ucm_aw_cau_usu_usuarios WHERE Id = ?";
+                else
+                    sql = "DELETE FROM ucm_aw_cau_usu_usuarios WHERE Id = ?";
                 connection.query(sql, idUsu ,
                     function (err, row) {
                         connection.release();

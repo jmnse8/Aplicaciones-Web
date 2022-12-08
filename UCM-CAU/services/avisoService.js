@@ -35,7 +35,29 @@ class AvisoService {
                 result.forEach(element => {
                     element.fecha = element.fecha.slice(0, 19).replace('T', ' ');
                 });
-                callback(result);
+                this.userDAO.getAllTecnicos((err, tecnicos) => {
+                    if (err) {
+                        console.log(err.message);
+                        callback(result);
+                    }
+                    else if (!tecnicos) {
+                        console.log("No hay avisos");
+                        callback(result);
+                        //response.render("login", {errores: false});
+                    }
+                    else {
+                        result.forEach(element => {
+                            let tec = tecnicos.find(e => e.nEmpleado == element.nEmpleado);
+                            if(tec)
+                                element.nombreTecnico = tec.nombre;
+                            else
+                                element.nombreTecnico = 'Sin técnico asignado';
+                        });
+                        //console.log(result);
+                        callback(result);
+                    }
+                });
+                //callback(result);
             }
         });
     }

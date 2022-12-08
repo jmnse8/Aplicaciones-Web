@@ -7,16 +7,15 @@
     <%- include("navbar", {usuario: usuario, panel: panel}) %>
     <main class="container-fluid ">
         <div class="row">
-            <div class="col-3 col-izq sombra">
-                <div class="row">
-                    <img src="/imagen/<%=usuarioEn.Id%>" alt="foto usuario" class="img-responsive center-block my-3">
-                </div>
+            <div class="col-5 col-izq sombra">
+                <img src="/imagen/<%=usuarioEn.Id%>" alt="foto usuario" class="foto-perfil">
+               
                 <div class="row color-fondo-tema">
                     <h2 class="text-center"><b><%= usuarioEn.nombre %></b></h2>
                 </div>
             </div>
 
-            <div class="col-8">
+            <div class="col-7">
                 <div class="container container-tabla">
                     <div class="row">
                         <h5><b>Id:</b>  <%=usuarioEn.Id%></h5>

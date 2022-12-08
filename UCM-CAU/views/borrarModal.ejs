@@ -1,5 +1,5 @@
 <div class="modal" <% if (usuario==null) { %> id="borrarModal<%=aviso.Id%>" <% } else { %> id="borrarModal<%=usuario.Id%>"<% } %> data-bs-backdrop="static" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered" tabindex="2">
     <div class="modal-content">
       <% if (usuario == null) { %>
         <form action="/borrarAviso" method="post">

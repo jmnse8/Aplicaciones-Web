@@ -35,25 +35,25 @@ app.get("/signup", function (request, response) {
     if (usuario)
         response.redirect("login.ejs");
     else
-        response.render("signup.ejs", { errores: {} });
+        response.render("signup.ejs", { errors: false });
 });
 
-app.post("/signup",
+app.post("/signup",//553kb es ya mucha imagen Prueba1234
     multerFactory.single('image'),
     check("name", "Rellene el campo Nombre").notEmpty(),
     check("email", "El formato del correo no es correcto").matches(/\S+@\S+\.\S+/),
     check("password", "Rellene el campo Contraseña").notEmpty(),
     check("password", "No cumple con la longitud solicitada").isLength({ min: 8, max: 16 }),
-    check("password", "El formato de la contraseña no es correcto").matches(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/),
+    //check("password", "El formato de la contraseña no es correcto").matches(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/),
     (request, response) => {
-        userService.signup(request, response, request.file);
+        userService.signUp(request, response, request.file);
     }
 );
 
 app.get("/logout", function (request, response) {
     console.log('Cierra sesión');
-    response.status(200);
     request.session.destroy();
+    response.status(200);
     response.redirect("login");
 });
 
