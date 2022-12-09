@@ -231,32 +231,80 @@ class UserDAO {
         });
     }
 
-    increaseUserStats(idUsu,tipoAvi, callback) {
-        this.pool.getConnection((err, connection) => {
-            if (err) {
-                callback(new Error("Error en la conexión a la base de datos"));
-            }
-            else {
-                let sql;
-                if(tipoAvi === 'incidencia')
-                    sql = "UPDATE ucm_aw_cau_usu_usuarios SET nAvisos = nAvisos + 1, nIncidencias = nIncidencias + 1 WHERE Id = ?";
-                else if(tipoAvi === 'sugerencia')
-                    sql = "UPDATE ucm_aw_cau_usu_usuarios SET nAvisos = nAvisos + 1, nSugerencias = nSugerencias + 1 WHERE Id = ?";
-                else
-                    sql = "UPDATE ucm_aw_cau_usu_usuarios SET nAvisos = nAvisos + 1, nFelicitaciones = nFelicitaciones + 1 WHERE Id = ?";
-                connection.query(sql, idUsu ,
-                    function (err, row) {
-                        connection.release();
-                        if (err) {
-                            callback(new Error("Error al acceso a la base de datos"));
-                            console.log(err.stack);
-                        }
-                        else {
-                            callback(null);
-                        }
-                    })
-            }
-        });
+    increaseUserStats(idUsu, idAvi ,tipoAvi , callback) {
+        if(!tipoAvi){
+            this.pool.getConnection((err, connection) => {
+                if (err) {
+                    callback(new Error("Error en la conexión a la base de datos"));
+                }
+                else {
+                    connection.query('SELECT categoria FROM ucm_aw_cau_avi_avisos WHERE Id = ?', idAvi ,
+                        function (err, row) {
+                            
+                            if (err) {
+                                connection.release();
+                                callback(new Error("Error al acceso a la base de datos"));
+                                console.log(err.stack);
+                            }
+                            else {
+                                tipoAvi = JSON.parse(JSON.stringify(row[0])).categoria;
+                                
+                                let sql;
+                                
+                                if(tipoAvi === 'incidencia')
+                                    sql = "UPDATE ucm_aw_cau_usu_usuarios SET nAvisos = nAvisos + 1, nIncidencias = nIncidencias + 1 WHERE Id = ?";
+                                else if(tipoAvi === 'sugerencia')
+                                    sql = "UPDATE ucm_aw_cau_usu_usuarios SET nAvisos = nAvisos + 1, nSugerencias = nSugerencias + 1 WHERE Id = ?";
+                                else
+                                    sql = "UPDATE ucm_aw_cau_usu_usuarios SET nAvisos = nAvisos + 1, nFelicitaciones = nFelicitaciones + 1 WHERE Id = ?";
+                                connection.query(sql, idUsu ,
+                                    function (err, row) {
+                                        connection.release();
+                                        if (err) {
+                                            callback(new Error("Error al acceso a la base de datos"));
+                                            console.log(err.stack);
+                                        }
+                                        else {
+                                            callback(null);
+                                        }
+                                    }
+                                );
+                                   
+                            }
+                        })
+                }
+            });
+        }
+        else {
+            this.pool.getConnection((err, connection) => {
+                if (err) {
+                    callback(new Error("Error en la conexión a la base de datos"));
+                }
+                else {
+                    let sql;
+                    
+                    if(tipoAvi === 'incidencia')
+                        sql = "UPDATE ucm_aw_cau_usu_usuarios SET nAvisos = nAvisos + 1, nIncidencias = nIncidencias + 1 WHERE Id = ?";
+                    else if(tipoAvi === 'sugerencia')
+                        sql = "UPDATE ucm_aw_cau_usu_usuarios SET nAvisos = nAvisos + 1, nSugerencias = nSugerencias + 1 WHERE Id = ?";
+                    else
+                        sql = "UPDATE ucm_aw_cau_usu_usuarios SET nAvisos = nAvisos + 1, nFelicitaciones = nFelicitaciones + 1 WHERE Id = ?";
+                    connection.query(sql, idUsu ,
+                        function (err, row) {
+                            connection.release();
+                            if (err) {
+                                callback(new Error("Error al acceso a la base de datos"));
+                                console.log(err.stack);
+                            }
+                            else {
+                                callback(null);
+                            }
+                        })
+                }
+            });
+        }
+
+        
     }
 
 }
