@@ -6,50 +6,40 @@
 <body>
     <%- include("navbar", {usuario: usuario, panel: panel}) %>
     <main class="container-fluid ">
-        <div class="row">
-            <div class="col-5 col-izq sombra">
-                <img src="/imagen/<%=usuarioEn.Id%>" alt="foto usuario" class="foto-perfil">
-               
-                <div class="row color-fondo-tema">
-                    <h2 class="text-center"><b><%= usuarioEn.nombre %></b></h2>
-                </div>
+        <div class="row fondo">
+            <div class="col-5 ladoIzquierdo">
+                <div><img src="/imagen/<%=usuarioEn.Id%>" alt="foto usuario" class="foto"></div>                         
             </div>
 
-            <div class="col-7">
-                <div class="container container-tabla">
-                    <div class="row">
-                        <h5><b>Id:</b>  <%=usuarioEn.Id%></h5>
-                    </div>
-                    <div class="row">
-                        <h5><b>Correo electrónico:</b>  <%=usuarioEn.email%></h5>
-                    </div>
-                    <div class="row">
-                        <h5><b>Contraseña:</b>  <%=usuarioEn.contraseña%></h5>
-                    </div>
-                    <div class="row">
-                        <h5><b>Perfil universitario:</b>  <%=usuarioEn.perfil%></h5>
-                    </div>
-                    <div class="row">
-                        <h5>aaaa</h5>
-                    </div>
-                    <div class="row">
-                        <h5>aaaa</h5>
-                    </div>
-                    <div class="row">
-                        <h5>aaaa</h5>
-                    </div>
-                    <div class="row">
-                        <h5>aaaa</h5>
-                    </div>
-                    <div class="row">
-                        <h5>aaaa</h5>
+            <div class="col-7 ladoDerecho">
+                <div class="card">                    
+                    <div class="lines"></div>
+                    <div class="dataDiv">
+                        <div class="row lineaPerfil text-center">
+                            <h3 id="textoNombre"><%= usuarioEn.nombre %></h3>
+                        </div>
+                        <div class="row lineaPerfil">
+                            <h5><b>Id :</b> &nbsp  <%=usuarioEn.Id%></h5>
+                        </div>
+                        <div class="row lineaPerfil">
+                            <h5><b>Correo electrónico : </b> &nbsp  <%=usuarioEn.email%></h5>
+                        </div>
+                        <div class="row lineaPerfil">
+                            <h5><b>Contraseña :</b> &nbsp <%=usuarioEn.contraseña%></h5>
+                        </div>
+                        <div class="row lineaPerfil">
+                            <h5><b>Perfil universitario :</b> &nbsp <%=usuarioEn.perfil%></h5>
+                        </div> 
+                        <div class="row lineaPerfil stats text-center">
+                            <h5><b> Avisos realizados/gestionados : </b> &nbsp <%=usuarioEn.nAvisos%></h5>
+                            <h5><b> Incidencias : </b> &nbsp <%=usuarioEn.nIncidencias%></h5>
+                            <h5><b> Sugerencias : </b> &nbsp <%=usuarioEn.nSugerencias%></h5>
+                            <h5><b> Felicitaciones : </b> &nbsp <%=usuarioEn.nFelicitaciones%></h5>
+                        </div>   
                     </div>
                 </div>
             </div>
         </div>
-    </main>
-
-    
-    
+    </main>    
 </body>
 </html>
