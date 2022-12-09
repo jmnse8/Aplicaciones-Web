@@ -6,12 +6,7 @@
 <body>
     <%- include("navbar", {usuario: usuario, panel: panel}) %>
     <main class="container-fluid ">
-        <div class="row fondo">
-            <div class="col-5 ladoIzquierdo">
-                <div><img src="/imagen/<%=usuarioEn.Id%>" alt="foto usuario" class="foto"></div>                         
-            </div>
-
-            <div class="col-7 ladoDerecho">
+        <img src="/imagen/<%=usuarioEn.Id%>" alt="foto usuario" class="foto">
                 <div class="card">                    
                     <div class="lines"></div>
                     <div class="dataDiv">
@@ -38,8 +33,7 @@
                         </div>   
                     </div>
                 </div>
-            </div>
-        </div>
+            
     </main>    
 </body>
 </html>

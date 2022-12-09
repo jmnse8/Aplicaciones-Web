@@ -14,8 +14,15 @@
 }
 
 .foto {
-    width: 100%;
-    height: 100%;
+    top: 0px;
+    left: 0px;
+    margin: 0;
+    position: fixed;
+    object-fit: cover;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    filter: blur(8px);
 }
 
 .nombre {
@@ -44,8 +51,8 @@
 .dataDiv {
     position:absolute;
     margin: 1%;
-    width: auto;
-    height: auto;
+    width: 90%;
+    height: 90%;
     background-color: rgb(100, 100, 245);
 }
 
@@ -55,19 +62,23 @@
     position: relative;
     width: auto;
     height: 66vh;
-    background-color: rgb(0, 0, 0);
+    background-color: rgba(255, 255, 255, 0.557);
+    box-shadow: 0px 18.92px 37.84px rgb(38 26 25 / 25%);
+    /* border: 1px solid rgb(231, 231, 231); */
+    border-radius: 1em;
     transition: 0.5s;
     overflow: hidden;
 }
 
 .lines {
+    border-radius: 1em;
     content: '';
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 1200px;
-    height: 100px;
+    width: 120%;
+    height: 120%;
     background: linear-gradient(transparent, #9e61d0, transparent);
     animation: animate 6s linear infinite;
 }
