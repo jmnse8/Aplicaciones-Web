@@ -63,15 +63,16 @@ class UserService {
         }
         // Password Format
         let password = true;
-        if (request.body.password !== request.body.password2)
+        if (request.body.password !== request.body.password2){
             password = false;
+        }
         let up = request.body.password.toUpperCase();
         let low = request.body.password.toLowerCase();
         if (request.body.password === low || request.body.password === up) {
             password = false
         }
         // Number Employee Format
-        let x = true;//$("#checkbox").is(":checked");
+        let x = false;//$("#checkbox").is(":checked");
         let employeeNumber = true;
         if (x) {
             if (request.body.nEmpleado.length != 8)
@@ -100,8 +101,6 @@ class UserService {
                 });
         }
         else {
-            if (!password)
-                console.log("Las contraseñas no son iguales");
             response.render("signUp.ejs", { errors: errors.array()});//, {errores: errors.mapped()}
         }
     };
