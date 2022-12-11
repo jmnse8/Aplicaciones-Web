@@ -21,13 +21,23 @@
                     <h5><b>Correo electrónico : </b> &nbsp  <%=usuarioEn.email%></h5>
                 </div>
                 <div class="row lineaPerfil">
-                    <h5><b>Contraseña :</b> &nbsp <%=usuarioEn.contraseña%></h5>
+                    <% 
+                    let passwordHidden = ""
+                    for (let letter in usuarioEn.contraseña){
+                        passwordHidden+="*"
+                    }
+                    %>
+                    <h5><b>Contraseña :</b> &nbsp <%=passwordHidden%></h5>
                 </div>
                 <div class="row lineaPerfil">
                     <h5><b>Perfil universitario :</b> &nbsp <%=usuarioEn.perfil%></h5>
                 </div> 
                 <div class="row lineaPerfil stats text-center">
-                    <h5><b> Avisos realizados/gestionados : </b> &nbsp <%=usuarioEn.nAvisos%></h5>
+                    <% if (usuarioEn.nEmpleado == null) { %>
+                        <h5><b> Avisos gestionados : </b> &nbsp <%=usuarioEn.nAvisos%></h5>
+                    <% } else { %>
+                        <h5><b> Avisos realizados : </b> &nbsp <%=usuarioEn.nAvisos%></h5>
+                    <% } %>
                     <h5><b> Incidencias : </b> &nbsp <%=usuarioEn.nIncidencias%></h5>
                     <h5><b> Sugerencias : </b> &nbsp <%=usuarioEn.nSugerencias%></h5>
                     <h5><b> Felicitaciones : </b> &nbsp <%=usuarioEn.nFelicitaciones%></h5>
