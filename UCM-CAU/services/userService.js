@@ -62,7 +62,9 @@ class UserService {
             imagen = fs.readFileSync("./public/images/logoUCM.jpg");
         }
         // Password Format
-        let password = (request.body.password === request.body.password2);
+        let password = true;
+        if (request.body.password !== request.body.password2)
+            password = false;
         let up = request.body.password.toUpperCase();
         let low = request.body.password.toLowerCase();
         if (request.body.password === low || request.body.password === up) {
@@ -71,9 +73,13 @@ class UserService {
         // Number Employee Format
         let x = true;//$("#checkbox").is(":checked");
         let employeeNumber = true;
-        if (x && request.body.nEmpleado.length == 8) {
-            let regExp = /^[0-9]{4}-[a-z]{3}$/;  // mirar sintaxis // 4 digitos, guion, 3 letras minusculas
-            employeeNumber = regExp.test(request.body.nEmpleado);
+        if (x) {
+            if (request.body.nEmpleado.length != 8)
+                employeeNumber = false;
+            else {
+                let regExp = /^[0-9]{4}-[a-z]{3}$/;  // mirar sintaxis // 4 digitos, guion, 3 letras minusculas
+                employeeNumber = regExp.test(request.body.nEmpleado);
+            }
         }
         const errors = validationResult(request);
 
@@ -94,6 +100,8 @@ class UserService {
                 });
         }
         else {
+            if (!password)
+                console.log("Las contraseñas no son iguales");
             response.render("signUp.ejs", { errors: errors.array()});//, {errores: errors.mapped()}
         }
     };

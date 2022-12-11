@@ -15,22 +15,22 @@
                     <img class="col-2" src="/imagen/<%=usuarioEn.Id%>" alt="foto usuario" id="f">
                 </div>
                 <div class="row lineaPerfil">
-                    <h5><b>Id :</b> &nbsp  <%=usuarioEn.Id%></h5>
-                </div>
+                    <h5><b>Perfil universitario :</b> &nbsp <%=usuarioEn.perfil%></h5>
+                </div> 
                 <div class="row lineaPerfil">
                     <h5><b>Correo electrónico : </b> &nbsp  <%=usuarioEn.email%></h5>
                 </div>
                 <div class="row lineaPerfil">
                     <% 
                     let passwordHidden = ""
-                    for (let letter in usuarioEn.contraseña){
-                        passwordHidden+="*"
+                    for (let letter in usuarioEn.contraseña) { 
+                        passwordHidden+="∗"
                     }
                     %>
                     <h5><b>Contraseña :</b> &nbsp <%=passwordHidden%></h5>
                 </div>
                 <div class="row lineaPerfil">
-                    <h5><b>Perfil universitario :</b> &nbsp <%=usuarioEn.perfil%></h5>
+                    <h5><b>Fecha creacion:</b> &nbsp <%=usuarioEn.fecha%></h5>
                 </div> 
                 <div class="row lineaPerfil stats text-center">
                     <% if (usuarioEn.nEmpleado == null) { %>

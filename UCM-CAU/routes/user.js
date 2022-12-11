@@ -42,9 +42,8 @@ app.post("/signup",//553kb es ya mucha imagen Prueba1234
     multerFactory.single('image'),
     check("name", "Rellene el campo Nombre").notEmpty(),
     check("email", "El formato del correo no es correcto").matches(/\S+@\S+\.\S+/),
-    check("password", "Rellene el campo Contraseña").notEmpty(),
     check("password", "No cumple con la longitud solicitada").isLength({ min: 8, max: 16 }),
-    //check("password", "El formato de la contraseña no es correcto").matches(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/),
+    check("password", "El formato de la contraseña no es correcto").matches(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/),
     (request, response) => {
         userService.signUp(request, response, request.file);
     }
