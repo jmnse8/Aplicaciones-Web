@@ -106,9 +106,11 @@ class UserService {
             if(!password){
                 errores.push({param: password, msg: "Las contraseñas no son iguales o son todas mayusculas o minusculas", value: request.body.password})
             }
+            if(!employeeNumber){
+                errores.push({param: password, msg: "El formato del numero de empleado es incorrecto", value: request.body.employeeNumber})
+            }
             response.render("signUp.ejs", { errors: errores});//, {errores: errors.mapped()}
-        }
-        
+        }        
     };
 
     getImage(request, response) {
