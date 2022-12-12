@@ -17,10 +17,10 @@
         <tbody class="table-group-divider">
           <% usuarios.forEach( usu => { %>
             <tr class="filaTabla" ><!-- ?usuId= -->
-              <td onclick="window.location='/profile/<%=usu.Id%>'"><%=usu.Id%></td><!-- cambiar -->
+              <td onclick="window.location='/profile/<%=usu.Id%>'"><%=usu.fecha.slice(0, 19).replace('T', ' ')%></td><!-- cambiar -->
               <td onclick="window.location='/profile/<%=usu.Id%>'"><%=usu.nombre%></td>
               <% if(usu.nEmpleado !== null) {%>
-                <td onclick="window.location='/profile/<%=usu.Id%>'">Téctico</td>
+                <td onclick="window.location='/profile/<%=usu.Id%>'">Técnico</td>
               <% } else { %>
                 <td onclick="window.location='/profile/<%=usu.Id%>'">Usuario</td>
               <% } %> 

@@ -72,18 +72,19 @@ class UserService {
             password = false
         }
         // Number Employee Format
-        let x = false;//$("#checkbox").is(":checked");
         let employeeNumber = true;
-        if (x) {
-            if (request.body.nEmpleado.length != 8)
-                employeeNumber = false;
-            else {
-                let regExp = /^[0-9]{4}-[a-z]{3}$/;  // mirar sintaxis // 4 digitos, guion, 3 letras minusculas
-                employeeNumber = regExp.test(request.body.nEmpleado);
+        if (request.body.perfil === "pas"){
+            if (request.body.checkEmpleado) {
+                if (request.body.nEmpleado.length != 8)
+                    employeeNumber = false;
+                else {
+                    let regExp = /^[0-9]{4}-[a-z]{3}$/;  // mirar sintaxis // 4 digitos, guion, 3 letras minusculas
+                    employeeNumber = regExp.test(request.body.nEmpleado);
+                }
             }
         }
         const errors = validationResult(request);
-
+        
         if (errors.isEmpty() && password && employeeNumber) { 
             this.userDAO.newUser(
                 request.body.name, request.body.email, request.body.password,
@@ -101,8 +102,13 @@ class UserService {
                 });
         }
         else {
-            response.render("signUp.ejs", { errors: errors.array()});//, {errores: errors.mapped()}
+            let errores = errors.array();
+            if(!password){
+                errores.push({param: password, msg: "Las contraseñas no son iguales o son todas mayusculas o minusculas", value: request.body.password})
+            }
+            response.render("signUp.ejs", { errors: errores});//, {errores: errors.mapped()}
         }
+        
     };
 
     getImage(request, response) {
