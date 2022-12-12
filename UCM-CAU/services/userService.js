@@ -92,20 +92,36 @@ class UserService {
         const errors = validationResult(request);
         
         if (errors.isEmpty() && password && employeeNumber) { 
-            this.userDAO.newUser(
-                request.body.name, request.body.email, request.body.password,
-                imagen, request.body.perfil, request.body.nEmpleado,
-                (err) => {
-                    if (err) {
-                        console.log(err.message);
-                        response.status(500);
-                        response.end();
-                    }
-                    else {
-                        response.status(200);
-                        response.render("login", { errores: false });   
-                    } 
-                });
+            this.userDAO.getUser(request.body.email, (err, result) => {
+                if (err) {
+                    console.log(err.message);
+                    response.end();
+                }
+                else if (!result) {
+                    this.userDAO.newUser(
+                        request.body.name, request.body.email, request.body.password,
+                        imagen, request.body.perfil, request.body.nEmpleado,
+                        (err) => {
+                            if (err) {
+                                console.log(err.message);
+                                response.status(500);
+                                response.end();
+                            }
+                            else {
+                                response.status(200);
+                                response.render("login", { errores: false });   
+                            } 
+                        });
+                }
+                else {
+                    console.log("ya existe ese usuario");
+                    let errores = errors.array();
+                    errores.push({param: 'Email', msg: "Ese usuario ya existe"})
+                    response.render("signUp.ejs", { errors: errores });
+
+                }
+            })
+            
         }
         else {
             let errores = errors.array();
