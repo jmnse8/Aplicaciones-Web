@@ -29,7 +29,7 @@
                     <h5><b>Contraseña :</b> &nbsp <%=passwordHidden%></h5>
                 </div>
                 <div class="row lineaPerfil">
-                    <h5><b>Fecha creacion:</b> &nbsp <%=usuarioEn.fecha%></h5>
+                    <h5><b>Fecha creacion:</b> &nbsp <%=usuarioEn.fecha.slice(0, 19).replace('T', ' ')%></h5>
                 </div> 
                 <div class="row lineaPerfil stats text-center">
                     <% if (usuarioEn.nEmpleado == null) { %>

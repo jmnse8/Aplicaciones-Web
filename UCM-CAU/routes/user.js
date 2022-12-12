@@ -14,7 +14,7 @@ app.get("/", function (request, response) {
     if (usuario)
         response.redirect("avisosentrantes");
     else
-        response.render("login.ejs", { errores: {} });
+        response.render("login.ejs", { errores: false });
 });
 
 app.get("/login", function (request, response) {
@@ -22,7 +22,7 @@ app.get("/login", function (request, response) {
     if (usuario)
         response.redirect("avisosentrantes");
     else
-        response.render("login.ejs", { errores: {} });
+        response.render("login.ejs", { errores: false });
 });
 
 app.post("/login",
@@ -33,7 +33,7 @@ app.post("/login",
 app.get("/signup", function (request, response) {
     let usuario = request.session.usuario;
     if (usuario)
-        response.redirect("login.ejs");
+        response.redirect("login");
     else
         response.render("signup.ejs", { errors: false });
 });

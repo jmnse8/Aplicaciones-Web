@@ -21,7 +21,9 @@ class UserService {
                 }
                 else if (!result) {
                     console.log("no existe ese usuario");
-                    response.render("login", { errores: false });
+                    let errores = errors.array();
+                    errores.push({param: 'error', msg: "El correo o la contraseña están mal"})
+                    response.render("login", { errores: errores });
                 }
                 else {
                     console.log("usuario encontrado");
@@ -31,25 +33,29 @@ class UserService {
                             email: result.email,
                             nombre: result.nombre,
                             contraseña: result.contraseña,
-                            //let bitmap = fs.readFileSync(result.imagen);
-                            //image : Buffer.from(result.Imagen).toString('base64'),
                             perfil: result.perfil,
                             nEmpleado: result.nEmpleado,
-                            activo: result.activo
+                            activo: result.activo,
+                            nAvisos: result.nAvisos,
+                            nIncidencias: result.nIncidencias,
+                            nSugerencias: result.nSugerencias,
+                            nFelicitaciones: result.nFelicitaciones,
+                            fecha: result.fecha
+                            
                         }
                         request.session.usuario = user;
                         response.redirect("avisosEntrantes");
                     }
                     else {
-                        console.log("la contraseña no coincide" + password);
-                        response.render("login", { errores: false });
+                        let errores = errors.array();
+                        errores.push({param: 'error', msg: "El correo o la contraseña están mal"})
+                        response.render("login", { errores: errores });
                     }
                 }
             });
         }
-        else { //si hay errores
-            console.log("la contraseña no coincide");
-            response.render("login", { errores: errors.mapped() });
+        else {
+            response.render("login", { errores: errors.array() });
         }
     };
 
