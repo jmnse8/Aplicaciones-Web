@@ -9,11 +9,12 @@
     <div id="image-track" data-mouse-down-at="0" data-prev-percentage="-50" data-percentage="-50">
         <% usuarios.forEach( usu => { %>
             <div class="tarjeta" >
-                <div class="borrar-btn">
-                    
+                <% if(usu.Id !== usuario.Id) {%>
+                <div class="borrar-btn">                    
                     <i class="fa-solid fa-trash basura basura-usuario" data-bs-toggle="modal" data-bs-target="#borrarModal<%=usu.Id%>"></i>
                     <div class="difuminado-fondo"></div>
                 </div>
+                <% } %>
                 <img class="image" src="/imagen/<%=usu.Id%>" draggable="false" />
 
                 <div class="info" onclick="window.location='/profile/<%=usu.Id%>'">
