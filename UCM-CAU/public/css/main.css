@@ -15,8 +15,9 @@ body {
   background-color: #fff;
   box-shadow: 0px 18.92px 37.84px rgb(38 26 25 / 25%);
   border-radius: 8px;
-  margin: 3em auto;
+  margin: 3em 2em;
   padding: 2em;
+  width: 60vw;
 }
 
 .color-fondo-tema {

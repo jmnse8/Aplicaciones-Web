@@ -1,0 +1,18 @@
+#fondo {
+    width: 100vw;
+    height: 25vh;
+    position: fixed;
+    left: 0px;
+    top: 75vh;
+    background: linear-gradient(0deg, rgb(100, 100, 245), rgb(189, 189, 255));
+    z-index: -2;
+}
+
+#imgFondo{
+    width: 35vw;
+    position: fixed;
+    left: 65vw;
+    top: 50vh; 
+    transform: translate(0%, -50%); 
+    z-index: -1;
+}

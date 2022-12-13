@@ -2,10 +2,11 @@
 <html lang="en">
     <%- include("head") %>
     <link rel="stylesheet" href="/css/gestionUsuarios.css">
+    <link rel="stylesheet" href="/css/avisos.css">
 </head>
 <body>
     <%- include("navbar", {usuario: usuario, panel: panel}) %>
-
+    <div id="fondo"></div>
     <div id="image-track" data-mouse-down-at="0" data-prev-percentage="-50" data-percentage="-50">
         <% usuarios.forEach( usu => { %>
             <div class="tarjeta" >

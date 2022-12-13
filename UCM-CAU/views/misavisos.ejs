@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
     <%- include("head") %>
-    
+    <link rel="stylesheet" href="/css/avisos.css">
     <script src="/scripts/añadirAviso.js"></script>
 </head>
 <body>
     <%- include("navbar", {usuario: usuario, panel: panel}) %>
-
+    <div id="fondo"></div>
+    <img id="imgFondo" src="/images/misAvisosArt.svg" alt="foto fondo mis avisos">
     <div class="container container-tabla">
       <% if (!avisos) { %>
         <h5 class="text-center">No tiene ningún aviso</h5>
