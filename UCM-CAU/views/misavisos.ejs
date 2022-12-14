@@ -44,8 +44,10 @@
                 <% if (usuario.nEmpleado == null) { %>
                   <td><%=avi.nombreTecnico%></td><!-- cambiar -->
                 <% } else { %>
+                  <% if (avi.comentarios == '') { %>
                   <td><i class="fa-solid fa-trash basura" data-bs-toggle="modal" data-bs-target="#borrarModal<%=avi.Id%>"></i></td>
                   <%- include("borrarModal", {aviso: avi, usuario: null}) %>
+                  <% } %>
                 <% } %>
               </tr>
               <%- include("verAvisoModal", {usuario: usuario,avi: avi}) %>

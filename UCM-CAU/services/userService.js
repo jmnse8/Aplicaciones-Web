@@ -79,6 +79,7 @@ class UserService {
         }
         // Number Employee Format
         let employeeNumber = true;
+        let nEmpleado = null;
         if (request.body.perfil === "pas"){
             if (request.body.checkEmpleado) {
                 if (request.body.nEmpleado.length != 8)
@@ -86,6 +87,7 @@ class UserService {
                 else {
                     let regExp = /^[0-9]{4}-[a-z]{3}$/;  // mirar sintaxis // 4 digitos, guion, 3 letras minusculas
                     employeeNumber = regExp.test(request.body.nEmpleado);
+                    nEmpleado = request.body.nEmpleado;
                 }
             }
         }
@@ -100,7 +102,7 @@ class UserService {
                 else if (!result) {
                     this.userDAO.newUser(
                         request.body.name, request.body.email, request.body.password,
-                        imagen, request.body.perfil, request.body.nEmpleado,
+                        imagen, request.body.perfil, nEmpleado,
                         (err) => {
                             if (err) {
                                 console.log(err.message);

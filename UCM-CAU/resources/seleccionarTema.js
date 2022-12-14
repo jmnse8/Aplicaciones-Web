@@ -170,9 +170,9 @@ const temaAA = [
 
 const temas = {
     'alumno' : temaAlumno,
-    'PAS' : temaPAS,
-    'PDI' : temaPDI,
-    'AA' : temaAA,
+    'pas' : temaPAS,
+    'pdi' : temaPDI,
+    'antiguo-alumno' : temaAA,
 };
 
 module.exports = temas;

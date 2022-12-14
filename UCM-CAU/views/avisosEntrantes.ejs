@@ -8,6 +8,9 @@
     <div id="fondo"></div>
     <img id="imgFondo" src="/images/avisosEntrantesArt.svg" alt="foto fondo mis avisos">
     <div class="container container-tabla">
+      <% if (!avisos) { %>
+        <h5 class="text-center">No hay ningún aviso</h5>
+      <% } else { %>
       <table class="table">
         <thead>
           <tr>
@@ -48,7 +51,7 @@
           
         </tbody>
       </table>
-
+      <% } %>
     </div>
     
 </body>
